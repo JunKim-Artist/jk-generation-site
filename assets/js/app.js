@@ -98,6 +98,33 @@
     });
   });
 
+  // touch-hold "hover" simulation for mobile (no real :hover on touch devices)
+  (function(){
+    const enterCards = document.getElementById('enter-cards');
+    const cards = Array.from(document.querySelectorAll('#enter-cards .card'));
+    let activeCard = null;
+    function setActive(card){
+      if(activeCard === card) return;
+      if(activeCard) activeCard.classList.remove('touch-active');
+      activeCard = card;
+      if(activeCard) activeCard.classList.add('touch-active');
+    }
+    function cardAt(x, y){
+      const el = document.elementFromPoint(x, y);
+      return el ? el.closest('#enter-cards .card') : null;
+    }
+    enterCards.addEventListener('touchstart', (e)=>{
+      const t = e.touches[0];
+      setActive(cardAt(t.clientX, t.clientY));
+    }, {passive:true});
+    enterCards.addEventListener('touchmove', (e)=>{
+      const t = e.touches[0];
+      setActive(cardAt(t.clientX, t.clientY));
+    }, {passive:true});
+    enterCards.addEventListener('touchend', ()=> setActive(null));
+    enterCards.addEventListener('touchcancel', ()=> setActive(null));
+  })();
+
   // single context-aware back button, lives in the persistent chrome
   document.getElementById('chrome-back').addEventListener('click', ()=>{
     if(state.screen === 'gallery'){ goEnter(); }
@@ -117,6 +144,7 @@
     gallerySub.textContent = DATA[cat].length + ' projects — select one to view';
     galleryGrid.hidden = false;
     galleryList.hidden = true;
+    galleryList.innerHTML = '';
     galleryGrid.innerHTML = '';
     DATA[cat].forEach((p, i)=>{
       const card = document.createElement('button');
@@ -138,6 +166,7 @@
     galleryTitle.textContent = 'Music';
     gallerySub.textContent = SONGS.length + ' tracks';
     galleryGrid.hidden = true;
+    galleryGrid.innerHTML = '';
     galleryList.hidden = false;
     galleryList.innerHTML = '';
     SONGS.forEach((s, i)=>{
@@ -314,9 +343,44 @@
     else togglePlay();
   });
   document.getElementById('mb-next').addEventListener('click', nextTrack);
+  document.getElementById('mb-prev').addEventListener('click', prevTrack);
   document.getElementById('mp-play').addEventListener('click', togglePlay);
   document.getElementById('mp-next').addEventListener('click', nextTrack);
   document.getElementById('mp-prev').addEventListener('click', prevTrack);
+
+  // ---------------- volume / mute ----------------
+  audioEl.volume = 0.8;
+  let lastVolume = 0.8;
+  const volInputs = [document.getElementById('mb-volume'), document.getElementById('mp-volume')];
+  const muteBtns = [document.getElementById('mb-mute'), document.getElementById('mp-mute')];
+  const volIcons = [document.getElementById('mb-vol-icon'), document.getElementById('mp-vol-icon')];
+
+  const ICON_VOL_UP = '<path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 12c0-1.77-1-3.29-2.5-4.03v8.06c1.5-.74 2.5-2.26 2.5-4.03z"/>';
+  const ICON_VOL_MUTE = '<path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M19 12l2.5-2.5-1-1L18 11l-2.5-2.5-1 1L17 12l-2.5 2.5 1 1L18 13l2.5 2.5 1-1z"/>';
+
+  function syncVolumeUI(){
+    const pct = Math.round((audioEl.muted ? 0 : audioEl.volume) * 100);
+    volInputs.forEach(inp=>{ if(inp) inp.value = pct; });
+    volIcons.forEach(icon=>{ if(icon) icon.innerHTML = (audioEl.muted || audioEl.volume===0) ? ICON_VOL_MUTE : ICON_VOL_UP; });
+  }
+  volInputs.forEach(inp=>{
+    if(!inp) return;
+    inp.addEventListener('input', ()=>{
+      const v = Number(inp.value)/100;
+      audioEl.muted = false;
+      audioEl.volume = v;
+      lastVolume = v || lastVolume;
+      syncVolumeUI();
+    });
+  });
+  muteBtns.forEach(btn=>{
+    if(!btn) return;
+    btn.addEventListener('click', ()=>{
+      audioEl.muted = !audioEl.muted;
+      syncVolumeUI();
+    });
+  });
+  syncVolumeUI();
 
   // ================= DM BOX =================
   const dmHead = document.getElementById('dm-head');
