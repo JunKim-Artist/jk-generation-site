@@ -75,9 +75,14 @@ async function handleVisitorMessage(request, env) {
   return json({ ok: true, entry });
 }
 
+function checkPassword(env, candidate) {
+  const expected = (env.ADMIN_PASSWORD || "").trim();
+  return !!expected && candidate.trim() === expected;
+}
+
 async function handleReply(request, env) {
   const password = request.headers.get("X-Admin-Password") || "";
-  if (!env.ADMIN_PASSWORD || password !== env.ADMIN_PASSWORD) {
+  if (!checkPassword(env, password)) {
     return json({ error: "unauthorized" }, 401);
   }
   let body;
@@ -109,7 +114,7 @@ async function handleAdminAuth(request, env) {
     return json({ error: "invalid_json" }, 400);
   }
   const password = (body && body.password || "").toString();
-  const ok = !!env.ADMIN_PASSWORD && password === env.ADMIN_PASSWORD;
+  const ok = checkPassword(env, password);
   return json({ ok });
 }
 

@@ -57,7 +57,7 @@
   const thread = document.getElementById('thread');
 
   async function login(){
-    const pw = document.getElementById('pw').value;
+    const pw = document.getElementById('pw').value.trim();
     err.textContent = '';
     try{
       const res = await fetch('/api/admin-auth', {
