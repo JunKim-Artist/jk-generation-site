@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>JK Generation — Admin</title>
+<style>
+  :root{ --bg:#0A0A0A; --ink:#F2F2F0; --ink-dim:#8A8A87; --line:#262623; --panel:#141412; }
+  *{box-sizing:border-box}
+  body{ margin:0; min-height:100vh; background:var(--bg); color:var(--ink); font-family:-apple-system,"Segoe UI",sans-serif; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .box{ width:100%; max-width:520px; }
+  h1{ font-size:18px; margin:0 0 18px; }
+  #login{ display:flex; flex-direction:column; gap:10px; }
+  input[type="password"], input[type="text"]{
+    background:var(--panel); border:1px solid var(--line); color:var(--ink); padding:11px 13px; border-radius:8px; font-size:14px; outline:none;
+  }
+  button{ background:var(--ink); color:var(--bg); border:none; padding:11px 13px; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; }
+  button:hover{ opacity:.9; }
+  #err{ color:#e08469; font-size:12.5px; min-height:16px; }
+  #panel{ display:none; }
+  #thread{ display:flex; flex-direction:column; gap:10px; max-height:50vh; overflow-y:auto; margin-bottom:16px; padding:12px; background:var(--panel); border:1px solid var(--line); border-radius:8px; }
+  .msg{ font-size:13px; line-height:1.5; }
+  .msg .meta{ color:var(--ink-dim); font-size:11px; }
+  .msg.visitor{ color:var(--ink); }
+  .msg.jun{ color:#8fbf8f; }
+  .reply-row{ display:flex; gap:8px; }
+  .reply-row input{ flex:1; }
+  #refresh{ background:none; border:1px solid var(--line); color:var(--ink-dim); margin-top:10px; padding:8px 12px; font-size:12px; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>JK Generation — Admin</h1>
+  <div id="login">
+    <input type="password" id="pw" placeholder="비밀번호">
+    <button id="loginBtn">Login</button>
+    <div id="err"></div>
+  </div>
+  <div id="panel">
+    <div id="thread"></div>
+    <div class="reply-row">
+      <input type="text" id="replyText" placeholder="답장 입력...">
+      <button id="sendBtn">Send</button>
+    </div>
+    <button id="refresh">새로고침</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  let PASSWORD = "";
+
+  const loginBox = document.getElementById('login');
+  const panel = document.getElementById('panel');
+  const err = document.getElementById('err');
+  const thread = document.getElementById('thread');
+
+  async function login(){
+    const pw = document.getElementById('pw').value;
+    err.textContent = '';
+    try{
+      const res = await fetch('/api/admin-auth', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ password: pw })
+      });
+      const data = await res.json();
+      if(data.ok){
+        PASSWORD = pw;
+        loginBox.style.display = 'none';
+        panel.style.display = 'block';
+        loadThread();
+      } else {
+        err.textContent = '비밀번호가 틀렸습니다.';
+      }
+    }catch(e){
+      err.textContent = '연결 오류.';
+    }
+  }
+  document.getElementById('loginBtn').addEventListener('click', login);
+  document.getElementById('pw').addEventListener('keydown', e=>{ if(e.key==='Enter') login(); });
+
+  function fmtTime(iso){
+    return new Date(iso).toLocaleString('ko-KR');
+  }
+
+  async function loadThread(){
+    try{
+      const res = await fetch('/api/messages');
+      const data = await res.json();
+      thread.innerHTML = '';
+      (data.messages || []).forEach(m=>{
+        const div = document.createElement('div');
+        div.className = 'msg ' + m.who;
+        div.innerHTML = '<div class="meta">' + (m.who==='jun'?'Jun':'Visitor · ' + (m.where||'')) + ' · ' + fmtTime(m.ts) + '</div><div>' + m.text.replace(/</g,'&lt;') + '</div>';
+        thread.appendChild(div);
+      });
+      thread.scrollTop = thread.scrollHeight;
+    }catch(e){
+      console.error(e);
+    }
+  }
+  document.getElementById('refresh').addEventListener('click', loadThread);
+
+  async function sendReply(){
+    const input = document.getElementById('replyText');
+    const text = input.value.trim();
+    if(!text) return;
+    input.value = '';
+    try{
+      await fetch('/api/reply', {
+        method:'POST',
+        headers:{'Content-Type':'application/json', 'X-Admin-Password': PASSWORD},
+        body: JSON.stringify({ text })
+      });
+      loadThread();
+    }catch(e){
+      console.error(e);
+    }
+  }
+  document.getElementById('sendBtn').addEventListener('click', sendReply);
+  document.getElementById('replyText').addEventListener('keydown', e=>{ if(e.key==='Enter') sendReply(); });
+})();
+</script>
+</body>
+</html>

@@ -383,6 +383,10 @@
   syncVolumeUI();
 
   // ================= DM BOX =================
+  // Messages now go through the Worker's /api/messages endpoint (backed by KV),
+  // which also forwards a notification to Discord server-side. This means the
+  // webhook URL is no longer exposed in client code, and Jun's replies (sent
+  // from /admin.html) show up here via polling, without a page reload.
   const dmHead = document.getElementById('dm-head');
   const dmBox = document.getElementById('dmbox');
   const dmThread = document.getElementById('dm-thread');
@@ -390,46 +394,66 @@
 
   dmHead.addEventListener('click', ()=> dmBox.classList.toggle('collapsed'));
 
-  function addDmMessage(who, text){
+  let renderedMsgIds = new Set();
+  function renderDmMessages(messages){
     const empty = dmThread.querySelector('.dm-empty');
-    if(empty) empty.remove();
+    let added = false;
+    messages.forEach(m=>{
+      if(renderedMsgIds.has(m.id)) return;
+      renderedMsgIds.add(m.id);
+      if(empty) empty.remove();
+      const p = document.createElement('p');
+      p.className = 'dm-msg';
+      const who = m.who === 'jun' ? 'Jun' : 'You';
+      p.innerHTML = '<b>'+who+'</b> · '+String(m.text).replace(/</g,'&lt;');
+      dmThread.appendChild(p);
+      added = true;
+    });
+    if(added) dmThread.scrollTop = dmThread.scrollHeight;
+  }
+  function addSystemNote(text){
     const p = document.createElement('p');
     p.className = 'dm-msg';
-    p.innerHTML = '<b>'+who+'</b> · '+text;
+    p.innerHTML = '<b>system</b> · '+text;
     dmThread.appendChild(p);
     dmThread.scrollTop = dmThread.scrollHeight;
   }
 
-  // NOTE: this webhook posts directly from the visitor's browser to Discord.
-  // Anyone who views page source can see this URL and could, in principle, spam
-  // the channel. Acceptable for a personal portfolio; revisit if abuse happens
-  // (Discord lets you regenerate/delete a webhook instantly from channel settings).
-  const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1539977065560809603/N0b1YzTt4JJddXUeqAOpRBgNfHX3YcmP9CShnPid0X2vH_FMpP7eGVVIEhILAoO4LefT";
+  async function pollDmThread(){
+    try{
+      const res = await fetch('/api/messages');
+      if(!res.ok) return;
+      const data = await res.json();
+      renderDmMessages(data.messages || []);
+    }catch(e){
+      // silent — this just means the live-poll tick failed, next tick retries
+    }
+  }
+  pollDmThread();
+  setInterval(pollDmThread, 6000);
 
-  function sendDm(){
+  async function sendDm(){
     const text = dmInput.value.trim();
     if(!text) return;
     const where = state.category ? (state.category+(state.projectIndex!=null?' / project '+(state.projectIndex+1):'')) : state.screen;
-    const now = new Date().toLocaleString('ko-KR');
-    addDmMessage('You', text);
     dmInput.value = '';
 
-    fetch(DISCORD_WEBHOOK_URL, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        content: '**새 방문자 메시지**\n> '+text+'\n\n위치: `'+where+'`  ·  시각: '+now
-      })
-    }).then(res=>{
-      if(res.ok || res.status===204){
-        addDmMessage('system', '전송되었습니다 — Jun에게 알림이 갔어요. 답장은 이 창에 표시됩니다.');
+    try{
+      const res = await fetch('/api/messages', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ text, where })
+      });
+      if(res.ok){
+        const data = await res.json();
+        if(data.entry) renderDmMessages([data.entry]);
       } else {
-        addDmMessage('system', '전송 실패 (status '+res.status+'). 알림 연결에 문제가 있어요.');
+        addSystemNote('전송 실패 (status '+res.status+').');
       }
-    }).catch(err=>{
-      addDmMessage('system', '전송 실패 — 네트워크 문제로 이 메시지는 Jun에게 자동으로 전달되지 않았어요. (이메일로 직접 연락해주세요)');
-      console.error('DM webhook error', err);
-    });
+    }catch(err){
+      addSystemNote('전송 실패 — 네트워크 문제로 전달되지 않았어요. (이메일로 직접 연락해주세요)');
+      console.error('DM send error', err);
+    }
   }
   document.getElementById('dm-send').addEventListener('click', sendDm);
   dmInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); sendDm(); } });
