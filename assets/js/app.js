@@ -1,0 +1,373 @@
+(function(){
+  "use strict";
+
+  // SONGS is defined in songs.js, loaded before this file
+
+  function placeholderProjects(prefix, n){
+    const arr = [];
+    for(let i=1;i<=n;i++){
+      arr.push({
+        id: prefix+'-'+i,
+        title: prefix.charAt(0).toUpperCase()+prefix.slice(1)+' Project '+String(i).padStart(2,'0'),
+        pages: [null,null,null],
+        desc: '프로젝트 설명이 곧 추가됩니다.'
+      });
+    }
+    return arr;
+  }
+
+  const DATA = {
+    architecture: placeholderProjects('architecture', 10),
+    freelance: placeholderProjects('freelance', 10),
+  };
+
+  // ---------------- state ----------------
+  const state = {
+    screen: 'intro',
+    category: null,
+    projectIndex: null,
+    pageIndex: 0,
+    introDone: false,
+  };
+
+  const screens = {};
+  document.querySelectorAll('.screen').forEach(s=>screens[s.id.replace('screen-','')] = s);
+
+  function showScreen(name){
+    Object.values(screens).forEach(s=>s.classList.remove('active'));
+    screens[name].classList.add('active');
+    state.screen = name;
+    document.body.classList.toggle('show-chrome', name==='gallery' || name==='viewer' || name==='musicplayer');
+  }
+
+  // ================= INTRO =================
+  const introSteps = document.querySelectorAll('#screen-intro .intro-step');
+  const introPrompt = document.querySelector('#screen-intro .prompt');
+  function runIntro(){
+    introSteps.forEach((el, i)=>{
+      setTimeout(()=> el.classList.add('run'), i * 900);
+    });
+    setTimeout(()=>{
+      introPrompt.classList.add('show');
+      state.introDone = true;
+    }, introSteps.length * 900 + 500);
+  }
+  runIntro();
+
+  function leaveIntro(){
+    if(!state.introDone) return;
+    goEnter();
+  }
+  window.addEventListener('keydown', (e)=>{
+    if(state.screen==='intro'){ leaveIntro(); return; }
+    if(e.code === 'Escape'){
+      document.getElementById('chrome-back').click();
+      return;
+    }
+    handleViewerKeys(e);
+  });
+  screens.intro.addEventListener('click', leaveIntro);
+
+  // ================= ENTER =================
+  let enterAnimated = false;
+  function goEnter(){
+    showScreen('enter');
+    if(enterAnimated) return;
+    enterAnimated = true;
+    const heading = document.getElementById('about-heading');
+    requestAnimationFrame(()=>{
+      setTimeout(()=>{
+        heading.classList.add('rest');
+      }, 650);
+      setTimeout(()=>{
+        document.getElementById('enter-cards').classList.add('show');
+        document.querySelectorAll('#enter-cards .card').forEach((c,i)=>{
+          setTimeout(()=>c.classList.add('show'), i*140);
+        });
+      }, 950);
+      setTimeout(()=>{
+        document.getElementById('enter-prompt').classList.add('show');
+      }, 1500);
+    });
+  }
+
+  document.querySelectorAll('#enter-cards .card').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      const cat = card.dataset.cat;
+      if(cat === 'music') openMusicList(); else openGallery(cat);
+    });
+  });
+
+  // single context-aware back button, lives in the persistent chrome
+  document.getElementById('chrome-back').addEventListener('click', ()=>{
+    if(state.screen === 'gallery'){ goEnter(); }
+    else if(state.screen === 'viewer'){ openGallery(state.category); }
+    else if(state.screen === 'musicplayer'){ openMusicList(); }
+  });
+
+  // ================= GALLERY (architecture / freelance) =================
+  const galleryGrid = document.getElementById('gallery-grid');
+  const galleryList = document.getElementById('gallery-list');
+  const galleryTitle = document.getElementById('gallery-title');
+  const gallerySub = document.getElementById('gallery-sub');
+
+  function openGallery(cat){
+    state.category = cat;
+    galleryTitle.textContent = cat.charAt(0).toUpperCase()+cat.slice(1);
+    gallerySub.textContent = DATA[cat].length + ' projects — select one to view';
+    galleryGrid.hidden = false;
+    galleryList.hidden = true;
+    galleryGrid.innerHTML = '';
+    DATA[cat].forEach((p, i)=>{
+      const card = document.createElement('button');
+      card.className = 'proj-card';
+      card.innerHTML = '<span class="pc-num serif">'+String(i+1).padStart(2,'0')+'</span><span class="pc-title">'+p.title+'</span>';
+      card.addEventListener('click', (e)=> flyToViewer(e.currentTarget, cat, i));
+      galleryGrid.appendChild(card);
+    });
+    showScreen('gallery');
+  }
+
+  // ================= GALLERY (music list) =================
+  function fmtDur(s){
+    const m = Math.floor(s/60), sec = Math.round(s%60);
+    return m+':'+String(sec).padStart(2,'0');
+  }
+  function openMusicList(){
+    state.category = 'music';
+    galleryTitle.textContent = 'Music';
+    gallerySub.textContent = SONGS.length + ' tracks';
+    galleryGrid.hidden = true;
+    galleryList.hidden = false;
+    galleryList.innerHTML = '';
+    SONGS.forEach((s, i)=>{
+      const row = document.createElement('div');
+      row.className = 'song-row playable';
+      row.innerHTML =
+        '<span class="sr-idx">'+String(i+1).padStart(2,'0')+'</span>'+
+        '<span class="sr-title">'+s.title+'</span>'+
+        '<span class="sr-dur">'+fmtDur(s.dur)+'</span>'+
+        '<span class="sr-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>';
+      row.addEventListener('click', ()=> openMusicPlayer(i));
+      galleryList.appendChild(row);
+    });
+    showScreen('gallery');
+  }
+
+  // ================= SHARED-ELEMENT TRANSITION =================
+  const fly = document.getElementById('fly');
+  function flyToViewer(cardEl, cat, index){
+    const r = cardEl.getBoundingClientRect();
+    fly.style.left = r.left+'px'; fly.style.top = r.top+'px';
+    fly.style.width = r.width+'px'; fly.style.height = r.height+'px';
+    fly.classList.add('active');
+    requestAnimationFrame(()=>{
+      fly.style.left='0px'; fly.style.top='0px';
+      fly.style.width='100vw'; fly.style.height='100vh';
+      fly.style.borderRadius='0px';
+    });
+    setTimeout(()=>{
+      openViewer(cat, index);
+      fly.classList.remove('active');
+      fly.style.cssText = '';
+    }, 560);
+  }
+
+  // ================= VIEWER (architecture / freelance) =================
+  const viewerTitle = document.getElementById('viewer-title');
+  const viewerDesc = document.getElementById('viewer-desc');
+  const viewerCanvas = document.getElementById('viewer-canvas');
+  const pageDots = document.getElementById('page-dots');
+
+  function openViewer(cat, index, page){
+    state.category = cat;
+    state.projectIndex = index;
+    state.pageIndex = page || 0;
+    renderViewer();
+    showScreen('viewer');
+  }
+  function renderViewer(){
+    const proj = DATA[state.category][state.projectIndex];
+    viewerTitle.textContent = proj.title;
+    viewerDesc.textContent = proj.desc + '  ('+(state.pageIndex+1)+'/'+proj.pages.length+')';
+    viewerCanvas.innerHTML = '<span class="placeholder-tag serif">slide '+(state.pageIndex+1)+' / '+proj.pages.length+' — awaiting content</span>';
+    pageDots.innerHTML = '';
+    proj.pages.forEach((_, i)=>{
+      const d = document.createElement('span');
+      if(i===state.pageIndex) d.className='on';
+      pageDots.appendChild(d);
+    });
+  }
+  function viewerNext(){
+    const proj = DATA[state.category][state.projectIndex];
+    if(state.pageIndex < proj.pages.length - 1){
+      state.pageIndex++; renderViewer();
+    } else {
+      openGallery(state.category);
+    }
+  }
+  function viewerPrev(){
+    if(state.pageIndex > 0){
+      state.pageIndex--; renderViewer();
+    } else {
+      openGallery(state.category);
+    }
+  }
+  document.getElementById('viewer-next').addEventListener('click', viewerNext);
+
+  function handleViewerKeys(e){
+    if(state.screen !== 'viewer') return;
+    if(e.code === 'Backspace'){ e.preventDefault(); viewerPrev(); }
+    else if(e.code === 'Enter' || e.code === 'Space'){ e.preventDefault(); viewerNext(); }
+  }
+
+  // ================= AUDIO ENGINE =================
+  // Plain <audio> playback, files served normally from assets/audio/.
+  const audioEl = document.getElementById('audio-el');
+  let currentTrack = -1;
+
+  const barCount = 40;
+  const mpBars = document.getElementById('mp-bars');
+  for(let i=0;i<barCount;i++){ const s=document.createElement('span'); mpBars.appendChild(s); }
+  const barEls = Array.from(mpBars.querySelectorAll('span'));
+  let barTimer = null;
+  function startBars(){
+    if(barTimer) return;
+    barTimer = setInterval(()=>{
+      barEls.forEach((b,i)=>{
+        const wobble = Math.sin(Date.now()/220 + i*0.6) * 0.5 + 0.5;
+        const h = 4 + (wobble*0.6 + Math.random()*0.4) * 58;
+        b.style.height = h.toFixed(0) + 'px';
+      });
+    }, 90);
+  }
+  function stopBars(){
+    clearInterval(barTimer); barTimer = null;
+    barEls.forEach(b=> b.style.height = '4px');
+  }
+
+  function loadTrack(i){
+    currentTrack = i;
+    const s = SONGS[i];
+    audioEl.src = 'assets/audio/' + s.file_web;
+    audioEl.load();
+    document.getElementById('mb-title').textContent = s.title;
+    document.getElementById('mp-title').textContent = 'JUN';
+    document.getElementById('mp-sub').textContent = s.title;
+    document.getElementById('mp-desc').textContent = '이 곡에 대한 설명이 곧 추가됩니다.';
+  }
+
+  function playCurrent(){
+    if(!audioEl.src) return;
+    const p = audioEl.play();
+    if(p && p.catch){
+      p.catch(err=>{
+        console.error('[audio] play() failed:', err && err.name, err && err.message);
+        document.getElementById('mp-desc').textContent = '오디오 재생에 실패했어요 (' + (err && err.name || 'unknown') + ').';
+      });
+    }
+  }
+  audioEl.addEventListener('error', ()=>{
+    const err = audioEl.error;
+    console.error('[audio] element error:', err && err.code, err && err.message);
+    document.getElementById('mp-desc').textContent = '오디오 로드 오류 (code ' + (err && err.code) + ').';
+  });
+  audioEl.addEventListener('play', startBars);
+  audioEl.addEventListener('pause', stopBars);
+  audioEl.addEventListener('ended', stopBars);
+
+  function openMusicPlayer(i){
+    loadTrack(i);
+    showScreen('musicplayer');
+    playCurrent();
+    syncPlayIcons();
+  }
+
+  function togglePlay(){
+    if(!audioEl.src) return;
+    if(audioEl.paused) playCurrent(); else audioEl.pause();
+    syncPlayIcons();
+  }
+  function nextTrack(){
+    const cand = (currentTrack + 1 + SONGS.length) % SONGS.length;
+    loadTrack(cand); playCurrent(); syncPlayIcons();
+  }
+  function prevTrack(){
+    const cand = (currentTrack - 1 + SONGS.length) % SONGS.length;
+    loadTrack(cand); playCurrent(); syncPlayIcons();
+  }
+  function syncPlayIcons(){
+    const playing = audioEl.src && !audioEl.paused;
+    const iconPath = playing
+      ? '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>'
+      : '<path d="M8 5v14l11-7z"/>';
+    document.getElementById('mb-icon').innerHTML = iconPath;
+    const mpPlay = document.getElementById('mp-play');
+    if(mpPlay) mpPlay.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor">'+iconPath+'</svg>';
+  }
+  audioEl.addEventListener('play', syncPlayIcons);
+  audioEl.addEventListener('pause', syncPlayIcons);
+  audioEl.addEventListener('ended', nextTrack);
+
+  document.getElementById('mb-toggle').addEventListener('click', ()=>{
+    if(currentTrack<0){ loadTrack(0); playCurrent(); }
+    else togglePlay();
+  });
+  document.getElementById('mb-next').addEventListener('click', nextTrack);
+  document.getElementById('mp-play').addEventListener('click', togglePlay);
+  document.getElementById('mp-next').addEventListener('click', nextTrack);
+  document.getElementById('mp-prev').addEventListener('click', prevTrack);
+
+  // ================= DM BOX =================
+  const dmHead = document.getElementById('dm-head');
+  const dmBox = document.getElementById('dmbox');
+  const dmThread = document.getElementById('dm-thread');
+  const dmInput = document.getElementById('dm-input');
+
+  dmHead.addEventListener('click', ()=> dmBox.classList.toggle('collapsed'));
+
+  function addDmMessage(who, text){
+    const empty = dmThread.querySelector('.dm-empty');
+    if(empty) empty.remove();
+    const p = document.createElement('p');
+    p.className = 'dm-msg';
+    p.innerHTML = '<b>'+who+'</b> · '+text;
+    dmThread.appendChild(p);
+    dmThread.scrollTop = dmThread.scrollHeight;
+  }
+
+  // NOTE: this webhook posts directly from the visitor's browser to Discord.
+  // Anyone who views page source can see this URL and could, in principle, spam
+  // the channel. Acceptable for a personal portfolio; revisit if abuse happens
+  // (Discord lets you regenerate/delete a webhook instantly from channel settings).
+  const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1539977065560809603/N0b1YzTt4JJddXUeqAOpRBgNfHX3YcmP9CShnPid0X2vH_FMpP7eGVVIEhILAoO4LefT";
+
+  function sendDm(){
+    const text = dmInput.value.trim();
+    if(!text) return;
+    const where = state.category ? (state.category+(state.projectIndex!=null?' / project '+(state.projectIndex+1):'')) : state.screen;
+    const now = new Date().toLocaleString('ko-KR');
+    addDmMessage('You', text);
+    dmInput.value = '';
+
+    fetch(DISCORD_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        content: '**새 방문자 메시지**\n> '+text+'\n\n위치: `'+where+'`  ·  시각: '+now
+      })
+    }).then(res=>{
+      if(res.ok || res.status===204){
+        addDmMessage('system', '전송되었습니다 — Jun에게 알림이 갔어요. 답장은 이 창에 표시됩니다.');
+      } else {
+        addDmMessage('system', '전송 실패 (status '+res.status+'). 알림 연결에 문제가 있어요.');
+      }
+    }).catch(err=>{
+      addDmMessage('system', '전송 실패 — 네트워크 문제로 이 메시지는 Jun에게 자동으로 전달되지 않았어요. (이메일로 직접 연락해주세요)');
+      console.error('DM webhook error', err);
+    });
+  }
+  document.getElementById('dm-send').addEventListener('click', sendDm);
+  dmInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); sendDm(); } });
+
+})();
