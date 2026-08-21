@@ -109,8 +109,21 @@
       ['freelance16.jpg','freelance16_sub.jpg']),
   ];
 
+  const STUDY_PROJECTS = [
+    {
+      title: 'Museum of the Future — Geometry Study',
+      pages: ['assets/images/arch01.jpg', 'assets/video/museum_study.mp4'],
+      desc: 'A Grasshopper study rebuilding Killa Design\'s Museum of the Future (Dubai) from the ground up — panelization logic, structural framing, and a physical paper model of the facade geometry. Recorded process video included.',
+    },
+    {
+      title: 'Oceanogràfic — Geometry Study',
+      pages: ['assets/images/arch02.jpg', 'assets/video/oceano_study.mp4'],
+      desc: 'A Grasshopper study of Félix Candela\'s Oceanogràfic (Valencia) shell structure — surface logic and structural framing rebuilt parametrically. Recorded process video included.',
+    },
+  ];
+
   const DATA = {
-    architecture: placeholderProjects('architecture', 10),
+    architecture: STUDY_PROJECTS.concat(placeholderProjects('architecture', 10)),
     freelance: FREELANCE_CASES,
   };
 
@@ -315,7 +328,9 @@
     viewerTitle.textContent = proj.title;
 
     const src = proj.pages[state.pageIndex];
-    if(src){
+    if(src && src.endsWith('.mp4')){
+      viewerCanvas.innerHTML = '<video src="'+src+'" controls playsinline style="max-width:100%;max-height:100%;"></video>';
+    } else if(src){
       viewerCanvas.innerHTML = '<img src="'+src+'" alt="'+proj.title+'" style="max-width:100%;max-height:100%;object-fit:contain;">';
     } else {
       viewerCanvas.innerHTML = '<span class="placeholder-tag serif">slide '+(state.pageIndex+1)+' / '+proj.pages.length+' — awaiting content</span>';
