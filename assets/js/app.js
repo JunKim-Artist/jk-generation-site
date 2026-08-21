@@ -16,33 +16,97 @@
     return arr;
   }
 
-  function freelanceCase(n, title, need, process, result){
+  function freelanceCase(title, situation, focus, approach, pageFiles){
     return {
-      id: 'freelance-'+n,
       title: title,
-      need: need,
-      process: process,
-      result: result,
-      pages: ['assets/images/freelance/freelance'+String(n).padStart(2,'0')+'.jpg'],
+      situation: situation,
+      focus: focus,
+      approach: approach,
+      pages: pageFiles.map(f => 'assets/images/freelance/'+f),
     };
   }
 
   const FREELANCE_CASES = [
-    freelanceCase(1, 'CAD 실무 과외 A', '실내디자인 전공, 표현력 강화가 필요했음', '7차시 · CAD 2D → SketchUp → Enscape 렌더링 → Illustrator 패널 디자인', '실습 도면과 렌더링 패널'),
-    freelanceCase(2, 'CAD 실무 과외 B', '시공 실무 경력자, 디테일한 표현법으로 업그레이드가 필요했음', '7차시 · CAD 2D → SketchUp → Enscape → AI 후반작업 → PPT 시각화 (자택 방문 강의)', '실측도면 기반 렌더 프레젠테이션'),
-    freelanceCase(3, '인테리어 실무 SketchUp 과외', '인테리어 실무자, 포트폴리오용 SketchUp 스킬이 필요했음', '상담 후 SketchUp 실무 모델링 세션 진행', 'SketchUp 모델링 실습물'),
-    freelanceCase(4, '건축학과 설계 프로젝트 멘토링 A', '건축학과생, 학교 설계 프로젝트 전 과정 지원이 필요했음', '8주 16차시 · CAD → Rhino/Grasshopper → QGIS → Illustrator, 대지분석부터 패널까지', '최종 크리틱 패널'),
-    freelanceCase(5, '인테리어 업체 실무 협업', '인테리어 시공업체, 모델링·도면검수 역량이 필요했음', 'SketchUp 실무 모델링 세션 + 시공 도면 검수 프로세스', '확정 도면(전/후 비교) + 3D 모델'),
-    freelanceCase(6, 'CAD·Rhino 과외 A', '3D Tool로 작업 범위 확장을 원했음', '6주 · CAD → Rhino/SketchUp → V-Ray/D5 렌더링 → Grasshopper/QGIS 심화', '렌더링 결과물'),
-    freelanceCase(7, 'CAD·SketchUp 과외 C', '기초부터 실전 도면 작성까지 필요했음', '표준 커리큘럼 · CAD → SketchUp → 3D 벽체 모델링', 'SketchUp 3D 평면 모델'),
-    freelanceCase(8, 'SketchUp 단기 과외 (온라인)', 'SketchUp만 집중적으로, 단기간에 필요했음', '3차시 압축 · Google Meet 화상, 기초 → Boolean → 응용', 'SketchUp 실습 모델'),
-    freelanceCase(9, '건축학과 설계 프로젝트 멘토링 B', '건축학과생, 설계 스튜디오+Grasshopper 심화가 필요했음', 'SketchUp/Rhino 기초부터 Grasshopper 파라메트릭까지 확장 진행', '설계 프로젝트 결과물'),
-    freelanceCase(10, '인테리어 실무 심화 과정', '3D프린팅·레이저커팅까지 다루는 실무 과정이 필요했음', '6차시 18시간 · Rhino/GH → 3D프린팅·레이저커팅 → V-Ray/Rumion/D5', '메디컬 인테리어 공간 렌더링'),
-    freelanceCase(11, 'CAD 실무 과외 D', '부동산 실무자, 실측도면 작성 능력이 필요했음', '6차시 · 실제 매물 실측 → CAD 도면화', '실측 평면도'),
-    freelanceCase(12, 'CAD 기초 과외', 'AutoCAD 완전 입문이 필요했음', '명령어 단위로 세밀하게 짚는 기초 강의', '기초 도면 실습물'),
-    freelanceCase(13, '해외 유학생 CAD·Rhino 과외', '캐나다 인테리어학과 재학생, 전 과정 원격 강의가 필요했음', '8주 24시간 · CAD → Rhino/Grasshopper(SubD·파라메트릭) → 3D프린팅 → QGIS → V-Ray → Indesign, 전 과정 Google Meet', 'Farnsworth House 렌더링 과제'),
-    freelanceCase(14, '단독주택 렌더링 외주', '설계 완료 후 시각화 렌더링이 필요했음', 'Rhino 모델링 → D5/V-Ray 렌더링, 외관·내부 다각도', '최종 렌더링 시리즈'),
-    freelanceCase(15, '파빌리온·구조물 렌더링 외주', '조형물(피라미드/이글루) 모델링·렌더링이 필요했음', '3dm 모델링 → 옵션 스터디 → 렌더링', '렌더링 옵션 시리즈'),
+    freelanceCase('CAD Practical Tutoring A',
+      'Interior design major who wanted to sharpen her presentation skills.',
+      'I structured the plan around detail and visual communication.',
+      '7 sessions over 4 weeks — AutoCAD 2D, SketchUp, Enscape rendering, then an Illustrator panel layout — ending with finished practice drawings and a rendered panel.',
+      ['freelance01.jpg','freelance01_sub.jpg','freelance01_curr.jpg']),
+    freelanceCase('CAD Practical Tutoring B',
+      'An experienced construction professional who wanted to upgrade to more detailed digital representation.',
+      'I leaned into his existing site knowledge and focused on precision and detail.',
+      '7 sessions at his home — AutoCAD 2D → SketchUp → Enscape → AI post-processing → PowerPoint visualization — producing measured drawings and a rendered presentation deck.',
+      ['freelance02.jpg','freelance02_sub.jpg','freelance02_curr.jpg']),
+    freelanceCase('Interior SketchUp Tutoring',
+      'A working interior designer who needed SketchUp skills for her portfolio.',
+      'I kept the sessions hands-on and tied directly to real modeling tasks.',
+      'Practical SketchUp modeling sessions producing usable, studio-quality practice models.',
+      ['freelance03.jpg']),
+    freelanceCase('Architecture Studio Mentoring A',
+      'An architecture student who needed full support through a school design project.',
+      'I paired software training with actual design development, not just tool tutorials.',
+      '16 sessions over 8 weeks — AutoCAD → Rhino/Grasshopper → QGIS → Illustrator — from site analysis through to a final critique panel.',
+      ['freelance04.jpg','freelance04_sub.jpg','freelance04_curr.jpg']),
+    freelanceCase('Interior Firm Collaboration',
+      'A remodeling company that needed stronger modeling and drawing-review capability.',
+      'I focused on a repeatable modeling and review workflow their team could reuse.',
+      'SketchUp modeling sessions plus a construction drawing review process, producing confirmed before/after floor plans and 3D models.',
+      ['freelance05.jpg','freelance05_sub.jpg']),
+    freelanceCase('CAD/Rhino Tutoring A',
+      'Wanted to expand beyond 2D drafting into 3D tools.',
+      'I built a bridge from CAD fundamentals straight into rendering workflows.',
+      '6 weeks — CAD → Rhino/SketchUp → V-Ray/D5 rendering → Grasshopper/QGIS — ending in finished rendered output.',
+      ['freelance06.jpg','freelance06_sub.jpg','freelance06_curr.jpg']),
+    freelanceCase('CAD/SketchUp Tutoring C',
+      'Needed to go from basics to producing real working drawings.',
+      'I emphasized rebuilding real floor plans from scratch, not just following commands.',
+      'Standard curriculum — CAD fundamentals into a 3D wall model in SketchUp.',
+      ['freelance07.jpg','freelance07_curr.jpg']),
+    freelanceCase('Short-term SketchUp Tutoring (Online)',
+      'Wanted to focus narrowly on SketchUp in a short window.',
+      'I compressed the material into a tight, remote-friendly format.',
+      '3 sessions over Google Meet — install & interface, Boolean modeling, then applied practice.',
+      ['freelance08.jpg']),
+    freelanceCase('Architecture Studio Mentoring B',
+      'An architecture student who needed support developing a studio project alongside Grasshopper skills.',
+      'I let the software follow the design, not the other way around.',
+      'SketchUp/Rhino fundamentals extended into Grasshopper parametric work as the studio project developed.',
+      ['freelance09.jpg','freelance09_sub.jpg','freelance09_curr.jpg']),
+    freelanceCase('Advanced Interior Practice Course',
+      'Needed practice-ready skills including 3D printing and laser cutting.',
+      'I connected digital modeling directly to physical fabrication output.',
+      '6 sessions, 18 hours — Rhino/Grasshopper → 3D printing & laser cutting → V-Ray/Rumion/D5 — producing a rendered medical-interior space.',
+      ['freelance10.jpg','freelance10_sub.jpg','freelance10_curr.jpg']),
+    freelanceCase('CAD Practical Tutoring D',
+      'A real-estate professional who needed accurate as-built drawings.',
+      'I focused entirely on real-world measuring and drafting accuracy.',
+      '6 sessions measuring an actual listing and turning it into a finished CAD floor plan.',
+      ['freelance11.jpg','freelance11_sub.jpg','freelance11_curr.jpg']),
+    freelanceCase('CAD Fundamentals Tutoring',
+      'Complete beginner to AutoCAD.',
+      'I broke the software down command by command so nothing was assumed.',
+      'A slow, deliberate fundamentals course building up to independent floor plan drafting.',
+      ['freelance12.jpg','freelance12_sub.jpg']),
+    freelanceCase('International Student CAD/Rhino Tutoring',
+      'An interior design student in Canada who needed a fully remote program.',
+      'I built a complete pipeline she could run entirely from her laptop, start to finish.',
+      '24 hours over 8 weeks — CAD → Rhino/Grasshopper (SubD & parametric) → 3D printing → QGIS → V-Ray → InDesign, entirely over Google Meet — culminating in a Farnsworth House rendering exercise.',
+      ['freelance13.jpg','freelance13_sub.jpg','freelance13_curr.jpg']),
+    freelanceCase('Detached House Rendering (Freelance)',
+      'A client who needed visualization after the design was finalized.',
+      'I focused on giving the house real atmosphere, not just a flat exterior view.',
+      'Rhino modeling into D5/V-Ray rendering across multiple exterior and interior angles.',
+      ['freelance14.jpg','freelance14_sub.jpg']),
+    freelanceCase('Pavilion & Structure Rendering (Freelance)',
+      'A client who needed modeling and rendering for sculptural structures.',
+      'I focused on getting the form and material read clearly across several options.',
+      '3dm modeling into option studies and final renders.',
+      ['freelance15.jpg','freelance15_sub.jpg']),
+    freelanceCase('Hair Salon Interior Rendering (Freelance)',
+      'A salon owner who sent a single material reference photo and asked for a 3D interior concept.',
+      'I focused on translating one material reference into a full spatial concept.',
+      'Rhino modeling of the salon interior, developing the textured feature wall from the client\'s reference photo into a full render. Final export still in progress.',
+      ['freelance16.jpg','freelance16_sub.jpg']),
   ];
 
   const DATA = {
@@ -177,7 +241,9 @@
     galleryGrid.innerHTML = '';
     DATA[cat].forEach((p, i)=>{
       const card = document.createElement('button');
-      card.className = 'proj-card';
+      const thumb = p.pages && p.pages[0];
+      card.className = 'proj-card' + (thumb ? ' has-thumb' : '');
+      if(thumb) card.style.backgroundImage = "url('"+thumb+"')";
       card.innerHTML = '<span class="pc-num serif">'+String(i+1).padStart(2,'0')+'</span><span class="pc-title">'+p.title+'</span>';
       card.addEventListener('click', (e)=> flyToViewer(e.currentTarget, cat, i));
       galleryGrid.appendChild(card);
@@ -255,11 +321,11 @@
       viewerCanvas.innerHTML = '<span class="placeholder-tag serif">slide '+(state.pageIndex+1)+' / '+proj.pages.length+' — awaiting content</span>';
     }
 
-    if(proj.need){
+    if(proj.situation){
       viewerDesc.innerHTML =
-        '<b>필요했던 것</b> · '+proj.need+'<br>'+
-        '<b>과정</b> · '+proj.process+'<br>'+
-        '<b>결과</b> · '+proj.result;
+        '<b>Situation</b> · '+proj.situation+'<br>'+
+        '<b>Focus</b> · '+proj.focus+'<br>'+
+        '<b>Approach</b> · '+proj.approach;
     } else {
       viewerDesc.textContent = proj.desc + '  ('+(state.pageIndex+1)+'/'+proj.pages.length+')';
     }

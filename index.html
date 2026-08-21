@@ -189,12 +189,26 @@ body.show-chrome #chrome{ opacity:1; }
 .grid[hidden], .list[hidden]{ display:none; }
 .proj-card{
   aspect-ratio:4/3; background:var(--panel); border:1px solid var(--line); border-radius:8px;
-  display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
+  display:flex; align-items:flex-end; justify-content:flex-start; position:relative; overflow:hidden;
   transition:transform .3s ease, border-color .3s ease;
 }
 .proj-card:hover{ transform:translateY(-3px); border-color:var(--ink-faint); }
-.proj-card .pc-num{ font-size:11px; color:var(--ink-faint); position:absolute; top:10px; left:12px; font-family:'Noto Serif KR',serif; }
-.proj-card .pc-title{ font-size:14px; font-weight:600; color:var(--ink-dim); transition:color .3s ease; }
+.proj-card.has-thumb{
+  background-size:cover; background-position:center; justify-content:flex-start;
+}
+.proj-card.has-thumb::before{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(10,10,10,0) 45%, rgba(10,10,10,.88) 100%);
+  transition:background .3s ease;
+}
+.proj-card.has-thumb:hover::before{ background:linear-gradient(180deg, rgba(10,10,10,.15) 0%, rgba(10,10,10,.92) 100%); }
+.proj-card .pc-num{ font-size:11px; color:var(--ink-faint); position:absolute; top:10px; left:12px; font-family:'Noto Serif KR',serif; z-index:1; }
+.proj-card.has-thumb .pc-num{ color:rgba(242,242,240,.75); }
+.proj-card .pc-title{
+  font-size:13px; font-weight:600; color:var(--ink-dim); transition:color .3s ease;
+  position:relative; z-index:1; padding:0 12px 10px; text-align:left; line-height:1.35;
+}
+.proj-card.has-thumb .pc-title{ color:var(--ink); }
 .proj-card:hover .pc-title{ color:var(--ink); }
 
 /* music list */
