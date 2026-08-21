@@ -16,9 +16,38 @@
     return arr;
   }
 
+  function freelanceCase(n, title, need, process, result){
+    return {
+      id: 'freelance-'+n,
+      title: title,
+      need: need,
+      process: process,
+      result: result,
+      pages: ['assets/images/freelance/freelance'+String(n).padStart(2,'0')+'.jpg'],
+    };
+  }
+
+  const FREELANCE_CASES = [
+    freelanceCase(1, 'CAD 실무 과외 A', '실내디자인 전공, 표현력 강화가 필요했음', '7차시 · CAD 2D → SketchUp → Enscape 렌더링 → Illustrator 패널 디자인', '실습 도면과 렌더링 패널'),
+    freelanceCase(2, 'CAD 실무 과외 B', '시공 실무 경력자, 디테일한 표현법으로 업그레이드가 필요했음', '7차시 · CAD 2D → SketchUp → Enscape → AI 후반작업 → PPT 시각화 (자택 방문 강의)', '실측도면 기반 렌더 프레젠테이션'),
+    freelanceCase(3, '인테리어 실무 SketchUp 과외', '인테리어 실무자, 포트폴리오용 SketchUp 스킬이 필요했음', '상담 후 SketchUp 실무 모델링 세션 진행', 'SketchUp 모델링 실습물'),
+    freelanceCase(4, '건축학과 설계 프로젝트 멘토링 A', '건축학과생, 학교 설계 프로젝트 전 과정 지원이 필요했음', '8주 16차시 · CAD → Rhino/Grasshopper → QGIS → Illustrator, 대지분석부터 패널까지', '최종 크리틱 패널'),
+    freelanceCase(5, '인테리어 업체 실무 협업', '인테리어 시공업체, 모델링·도면검수 역량이 필요했음', 'SketchUp 실무 모델링 세션 + 시공 도면 검수 프로세스', '확정 도면(전/후 비교) + 3D 모델'),
+    freelanceCase(6, 'CAD·Rhino 과외 A', '3D Tool로 작업 범위 확장을 원했음', '6주 · CAD → Rhino/SketchUp → V-Ray/D5 렌더링 → Grasshopper/QGIS 심화', '렌더링 결과물'),
+    freelanceCase(7, 'CAD·SketchUp 과외 C', '기초부터 실전 도면 작성까지 필요했음', '표준 커리큘럼 · CAD → SketchUp → 3D 벽체 모델링', 'SketchUp 3D 평면 모델'),
+    freelanceCase(8, 'SketchUp 단기 과외 (온라인)', 'SketchUp만 집중적으로, 단기간에 필요했음', '3차시 압축 · Google Meet 화상, 기초 → Boolean → 응용', 'SketchUp 실습 모델'),
+    freelanceCase(9, '건축학과 설계 프로젝트 멘토링 B', '건축학과생, 설계 스튜디오+Grasshopper 심화가 필요했음', 'SketchUp/Rhino 기초부터 Grasshopper 파라메트릭까지 확장 진행', '설계 프로젝트 결과물'),
+    freelanceCase(10, '인테리어 실무 심화 과정', '3D프린팅·레이저커팅까지 다루는 실무 과정이 필요했음', '6차시 18시간 · Rhino/GH → 3D프린팅·레이저커팅 → V-Ray/Rumion/D5', '메디컬 인테리어 공간 렌더링'),
+    freelanceCase(11, 'CAD 실무 과외 D', '부동산 실무자, 실측도면 작성 능력이 필요했음', '6차시 · 실제 매물 실측 → CAD 도면화', '실측 평면도'),
+    freelanceCase(12, 'CAD 기초 과외', 'AutoCAD 완전 입문이 필요했음', '명령어 단위로 세밀하게 짚는 기초 강의', '기초 도면 실습물'),
+    freelanceCase(13, '해외 유학생 CAD·Rhino 과외', '캐나다 인테리어학과 재학생, 전 과정 원격 강의가 필요했음', '8주 24시간 · CAD → Rhino/Grasshopper(SubD·파라메트릭) → 3D프린팅 → QGIS → V-Ray → Indesign, 전 과정 Google Meet', 'Farnsworth House 렌더링 과제'),
+    freelanceCase(14, '단독주택 렌더링 외주', '설계 완료 후 시각화 렌더링이 필요했음', 'Rhino 모델링 → D5/V-Ray 렌더링, 외관·내부 다각도', '최종 렌더링 시리즈'),
+    freelanceCase(15, '파빌리온·구조물 렌더링 외주', '조형물(피라미드/이글루) 모델링·렌더링이 필요했음', '3dm 모델링 → 옵션 스터디 → 렌더링', '렌더링 옵션 시리즈'),
+  ];
+
   const DATA = {
     architecture: placeholderProjects('architecture', 10),
-    freelance: placeholderProjects('freelance', 10),
+    freelance: FREELANCE_CASES,
   };
 
   // ---------------- state ----------------
@@ -218,8 +247,22 @@
   function renderViewer(){
     const proj = DATA[state.category][state.projectIndex];
     viewerTitle.textContent = proj.title;
-    viewerDesc.textContent = proj.desc + '  ('+(state.pageIndex+1)+'/'+proj.pages.length+')';
-    viewerCanvas.innerHTML = '<span class="placeholder-tag serif">slide '+(state.pageIndex+1)+' / '+proj.pages.length+' — awaiting content</span>';
+
+    const src = proj.pages[state.pageIndex];
+    if(src){
+      viewerCanvas.innerHTML = '<img src="'+src+'" alt="'+proj.title+'" style="max-width:100%;max-height:100%;object-fit:contain;">';
+    } else {
+      viewerCanvas.innerHTML = '<span class="placeholder-tag serif">slide '+(state.pageIndex+1)+' / '+proj.pages.length+' — awaiting content</span>';
+    }
+
+    if(proj.need){
+      viewerDesc.innerHTML =
+        '<b>필요했던 것</b> · '+proj.need+'<br>'+
+        '<b>과정</b> · '+proj.process+'<br>'+
+        '<b>결과</b> · '+proj.result;
+    } else {
+      viewerDesc.textContent = proj.desc + '  ('+(state.pageIndex+1)+'/'+proj.pages.length+')';
+    }
     pageDots.innerHTML = '';
     proj.pages.forEach((_, i)=>{
       const d = document.createElement('span');
