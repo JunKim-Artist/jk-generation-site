@@ -1,0 +1,10 @@
+.git
+.git/**
+.gitignore
+.wrangler
+.wrangler/**
+wrangler.jsonc
+worker.js
+node_modules
+node_modules/**
+*.md

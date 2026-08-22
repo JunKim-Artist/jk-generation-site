@@ -1,4 +1,3 @@
-const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1539977065560809603/N0b1YzTt4JJddXUeqAOpRBgNfHX3YcmP9CShnPid0X2vH_FMpP7eGVVIEhILAoO4LefT";
 const THREAD_KEY = "thread";
 const MAX_MESSAGES = 200;
 
@@ -55,7 +54,8 @@ async function handleVisitorMessage(request, env) {
 
   // fire-and-forget notification to Discord; failure here shouldn't fail the visitor's request
   try {
-    await fetch(DISCORD_WEBHOOK_URL, {
+    if (!env.DISCORD_WEBHOOK_URL) throw new Error("DISCORD_WEBHOOK_URL not configured");
+    await fetch(env.DISCORD_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
