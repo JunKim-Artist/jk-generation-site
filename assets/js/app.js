@@ -106,7 +106,7 @@
       'A salon owner who sent a single material reference photo and asked for a 3D interior concept.',
       'I focused on translating one material reference into a full spatial concept.',
       'Rhino modeling of the salon interior, developing the textured feature wall from the client\'s reference photo into a full render. Final export still in progress.',
-      ['freelance16.jpg','freelance16_sub.jpg']),
+      ['freelance16_v2.jpg','freelance16_sub_v2.jpg']),
   ];
 
   const FEATURED_PROJECTS = [
