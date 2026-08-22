@@ -109,6 +109,39 @@
       ['freelance16.jpg','freelance16_sub.jpg']),
   ];
 
+  const FEATURED_PROJECTS = [
+    {
+      title: 'THE NEXT EARTH',
+      pages: ['assets/images/arch_nextearth_hero.jpg', 'assets/images/arch_nextearth_sections.jpg', 'assets/images/arch_nextearth_robot.jpg'],
+      desc: 'Graduation thesis, Kyonggi University, 2026. An autonomous, robot-built settlement at the lunar south pole, engineered around ISRU (in-situ resource utilization) so it depends on almost nothing shipped from Earth. I translated real space-science data into an actual construction sequence — siting logic, a diagrid shell system, and a custom robotic arm I built and coded myself to prove the assembly process physically, not just on screen. Rhino, Grasshopper, Python, Arduino.',
+    },
+    {
+      title: 'RE:FLOW',
+      pages: ['assets/images/arch_reflow_hero.jpg', 'assets/images/arch_reflow_site.jpg', 'assets/images/arch_reflow_plans.jpg'],
+      desc: 'Capstone Design Studio 5, 2025. An urban regeneration and renovation project for Jeongjo-ro 796, a rare alley in Suwon that still traces the city\'s original 18th-century waterway. I measured the site myself, interviewed the shopkeepers and a security guard who actually work there, and used their accounts to drive a massing strategy that reopens the alley\'s historic flow of water and people. Rhino, AutoCAD, Enscape.',
+    },
+    {
+      title: 'UN-COVERING',
+      pages: ['assets/images/arch_uncovering_hero.jpg', 'assets/images/arch_uncovering_facade.jpg', 'assets/images/arch_uncovering_section.jpg'],
+      desc: 'Design Studio 6, Fall 2025. A timber canopy and public plaza reweaving Tongin Market\'s arcade back into Seoul\'s Seochon neighborhood, addressing a street where materials, ownership, and history had all fragmented. I designed a repeatable timber-and-polycarbonate facade module and an interactive water plaza with four distinct modes, then detailed the construction down to material thickness. Rhino, V-Ray.',
+    },
+    {
+      title: 'THE BISTRO',
+      pages: ['assets/images/arch_bistro_hero.jpg', 'assets/images/arch_bistro_structure.jpg', 'assets/images/arch_bistro_plan.jpg'],
+      desc: '3rd-year studio, Seocho-gu, Seoul. A culinary and cultural complex built on the site\'s history as rice paddies once cultivated for the royal court. The concept — the dynamism of roots — pushed into a form-active diagrid structure with a rice-blended concrete facade, developed through hand sketches, physical mesh studies, and a full structural skin diagram. Rhino, Grasshopper.',
+    },
+    {
+      title: '1945: A Landscape of Memory',
+      pages: ['assets/images/arch_nagasaki_hero.jpg', 'assets/images/arch_nagasaki_site.jpg', 'assets/images/arch_nagasaki_human.jpg'],
+      desc: 'Academic project, Nagasaki, Japan. A memorial pavilion that resists the instinct to seal grief behind walls — instead the structure stays porous and open, woven into daily foot traffic so remembrance and ordinary life share the same ground. I built the design around real blast-radius and casualty data, then let that data generate the pavilion\'s organic, wreath-like structural geometry.',
+    },
+    {
+      title: 'Transforming Architecture',
+      pages: ['assets/images/arch_transform_hero.jpg', 'assets/images/arch_transform_model.jpg', 'assets/images/arch_transform_structural.jpg'],
+      desc: 'Independent research project. A study of tensegrity structures using the same self-stabilizing logic found in DNA-origami nanoparticles, prototyped as physical wood-and-string models before being pushed toward architectural scale. Structural analysis — buckling, natural frequency, impact response — tested its viability for disaster-response shelters and off-world habitats, a research line that continues directly into The Next Earth\'s lunar structure. Rhino, Karamba3D.',
+    },
+  ];
+
   const STUDY_PROJECTS = [
     {
       title: 'Museum of the Future — Geometry Study',
@@ -123,7 +156,7 @@
   ];
 
   const DATA = {
-    architecture: STUDY_PROJECTS.concat(placeholderProjects('architecture', 10)),
+    architecture: FEATURED_PROJECTS.concat(STUDY_PROJECTS),
     freelance: FREELANCE_CASES,
   };
 
