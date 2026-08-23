@@ -117,6 +117,10 @@
     return arr;
   }
 
+  function projDesc(en, ko, programs){
+    return { en: en, ko: ko, programs: programs };
+  }
+
   const ARCHITECTURE_PROJECTS = [
     {
       title: 'THE NEXT EARTH',
@@ -124,7 +128,21 @@
       thumb: 'assets/images/arch_nextearth_thumb.jpg',
       intro: { en: 'How can we inhabit the Moon?', ko: '달에서의 건축, 그 육하원칙은 무엇인가?' },
       pages: ['https://youtu.be/3YwSd8TGetM'],
-      desc: PLACEHOLDER_DESC,
+      desc: projDesc(
+        'Before anyone lives there, this project lays the uncrewed groundwork for a lunar settlement built through ISRU-based digital fabrication — I wrote the algorithm that drives it and built a robotic arm to prove the construction physically.',
+        '유인 정착에 앞선 무인 개발 단계로, ISRU(현지자원활용) 기반 디지털 패브리케이션으로 달 정착지를 짓는 알고리즘을 직접 만들고, 로봇팔까지 제작·코딩해 실제 시공 과정을 증명했습니다.',
+        [
+          { cat: 'Main Modeling', tools: 'Rhino' },
+          { cat: 'Parametric Design', tools: 'Grasshopper' },
+          { cat: 'Simulation', tools: 'Kangaroo (in Grasshopper)' },
+          { cat: 'Rendering', tools: 'V-Ray' },
+          { cat: 'AI Video', tools: 'Deevid AI' },
+          { cat: 'Physical Prototyping', tools: 'Arduino, Python' },
+          { cat: 'Documentation', tools: 'AutoCAD' },
+          { cat: 'Graphic Design', tools: 'Photoshop, Illustrator' },
+          { cat: 'Video Editing', tools: 'Premiere Pro' },
+        ]
+      ),
     },
     {
       title: 'UN-COVERING',
@@ -132,7 +150,16 @@
       thumb: 'assets/images/arch_uncovering_thumb.jpg',
       intro: { en: 'What does Tongin Market truly need?', ko: '통인시장에 진정 필요한 것은 무엇일까?' },
       pages: ['assets/images/arch_uncovering_p1.jpg'],
-      desc: PLACEHOLDER_DESC,
+      desc: projDesc(
+        "I resolved the market stalls' encroachment on the road with six shop-type-specific alternatives, folding the forgotten memory of the Baekundongcheon waterway into that same timber arcade to bring it back as a space for everyone.",
+        '통인시장 상인들이 도로를 침범해 쓰던 문제를 상점 유형별 6가지 대안으로 풀어내면서, 잊혀졌던 백운동천의 물길 기억까지 그 목구조 아케이드 안으로 함께 끌어들여 모두를 위한 공간으로 되살렸습니다.',
+        [
+          { cat: 'Main Modeling', tools: 'Rhino' },
+          { cat: 'Rendering', tools: 'V-Ray' },
+          { cat: 'Documentation', tools: 'AutoCAD' },
+          { cat: 'Graphic Design', tools: 'Photoshop, Illustrator' },
+        ]
+      ),
     },
     {
       title: 'RE:FLOW',
@@ -140,7 +167,16 @@
       thumb: 'assets/images/arch_reflow_thumb.jpg',
       intro: { en: 'How do we reconnect the forgotten footsteps of Suwon?', ko: '수원의 잊힌 발걸음을 어떻게 이을 것인가?' },
       pages: ['assets/images/arch_reflow_p1.jpg'],
-      desc: PLACEHOLDER_DESC,
+      desc: projDesc(
+        "Based on interviews with the people who actually work and live in the alley, this urban regeneration project reopens Suwon's forgotten waterway and footpaths — reviving a once-important street to connect a fading traditional market with a rising modern one.",
+        '그 골목에서 일하고 사는 사람들을 직접 인터뷰해서, 수원의 잊혀진 골목에 옛 물길과 발걸음을 다시 열어주는 도시재생 프로젝트입니다. 한때 중요했던 이 길을 되살려, 저물어가는 전통시장과 새로 피어나는 현대시장을 잇습니다.',
+        [
+          { cat: 'Main Modeling', tools: 'Rhino' },
+          { cat: 'Rendering', tools: 'V-Ray' },
+          { cat: 'Documentation', tools: 'AutoCAD' },
+          { cat: 'Graphic Design', tools: 'Photoshop, Illustrator' },
+        ]
+      ),
     },
     {
       title: 'THE BISTRO',
@@ -148,7 +184,16 @@
       thumb: 'assets/images/arch_bistro_thumb.jpg',
       intro: { en: 'What are the fundamental roots of Seoripul?', ko: '서울 서리풀의 뿌리는 무엇일까?' },
       pages: ['assets/images/arch_bistro_p1.jpg'],
-      desc: PLACEHOLDER_DESC,
+      desc: projDesc(
+        'Roads were laid over the original landscape, and as each plot filled with people\'s ideas, the buildings seem to plant themselves from above — this project gives form to a root pushing up from somewhere beneath Seoripul.',
+        '원래 자연 위에 도로가 놓이고, 필지마다 사람들의 생각이 쌓이면서 건물들은 위에서 아래로 박히듯 들어섭니다. 서리풀 지하 어딘가에서 뚫고 올라오는 뿌리를 형태로 옮긴 프로젝트입니다.',
+        [
+          { cat: 'Main Modeling', tools: 'Rhino' },
+          { cat: 'Rendering', tools: 'Rumion' },
+          { cat: 'Documentation', tools: 'AutoCAD' },
+          { cat: 'Graphic Design', tools: 'Photoshop, Illustrator' },
+        ]
+      ),
     },
     {
       title: 'BLOOMING HEARTS IN EMPTINESS',
@@ -156,7 +201,16 @@
       thumb: 'assets/images/arch_blooming_thumb.jpg',
       intro: { en: 'How can we memorialize the tragedy of Nagasaki?', ko: '나가사키의 아픔을 어떻게 기억할 것인가?' },
       pages: ['assets/images/arch_blooming_p1.jpg'],
-      desc: PLACEHOLDER_DESC,
+      desc: projDesc(
+        "Nagasaki's atomic blast blooms into a pavilion, so that everyone remembers.",
+        '나가사키의 핵폭발은 하나의 파빌리온으로 피어나, 모두가 그날을 기억하게 합니다.',
+        [
+          { cat: 'Main Modeling', tools: 'Rhino' },
+          { cat: 'Rendering', tools: 'D5 Render' },
+          { cat: 'Documentation', tools: 'AutoCAD' },
+          { cat: 'Graphic Design', tools: 'Photoshop, Illustrator' },
+        ]
+      ),
     },
     {
       title: 'Transforming Experiment on Mars',
@@ -164,7 +218,18 @@
       thumb: 'assets/images/arch_mars_thumb.jpg',
       intro: { en: 'What if architecture could transform?', ko: "영화 '트랜스포머'를 본 후, 건축의 변화를 상상하다." },
       pages: ['assets/video/arch_mars_p1.mp4'],
-      desc: PLACEHOLDER_DESC,
+      desc: projDesc(
+        'Like Galvatron transforming in the movie Transformers — how do you analyze a structure where tetrahedral tensegrity units drop onto Mars and reshape themselves into a cube?',
+        '영화 트랜스포머의 갈바트론처럼, 화성으로 이주할 때 정사면체 텐세그리티 유닛이 떨어져 정육면체로 변하는 구조는 어떻게 분석할 수 있을까요?',
+        [
+          { cat: 'Main Modeling', tools: 'Rhino' },
+          { cat: 'Parametric Design', tools: 'Grasshopper' },
+          { cat: 'Simulation', tools: 'Kangaroo (in Grasshopper)' },
+          { cat: 'Structural Analysis', tools: 'Karamba3D (in Grasshopper)' },
+          { cat: 'Rendering', tools: 'V-Ray' },
+          { cat: 'AI Video', tools: 'Deevid AI' },
+        ]
+      ),
     },
     {
       title: 'HQ Skärholmen BIM Modeling',
@@ -172,7 +237,15 @@
       thumb: 'assets/images/arch_skarholmen_thumb.jpg',
       intro: { en: 'Exploring modeling possibilities in Revit', ko: '레빗(Revit)을 활용한 모델링의 가능성은?' },
       pages: pageRange('arch_skarholmen', 11),
-      desc: PLACEHOLDER_DESC,
+      desc: projDesc(
+        'I modeled an office headquarters in Skärholmen, Stockholm entirely in Revit — from site analysis all the way through layout, plans, and sections.',
+        '스톡홀름 셰르홀멘의 오피스 본사 건물을 대지 분석부터 배치도·평면도·단면도까지, 처음부터 끝까지 Revit으로 직접 모델링했습니다.',
+        [
+          { cat: 'BIM / Main Modeling', tools: 'Revit' },
+          { cat: 'Documentation', tools: 'AutoCAD' },
+          { cat: 'Rendering', tools: 'Enscape' },
+        ]
+      ),
     },
     {
       title: 'Grasshopper Forming Practice 1',
@@ -180,7 +253,15 @@
       thumb: 'assets/images/arch_gh1_thumb.jpg',
       intro: { en: 'Decoding the design logic of the Museum of the Future', ko: '두바이 미래 박물관의 디자인 논리는 무엇일까?' },
       pages: ['https://youtu.be/iuEYg4p_2B4'],
-      desc: PLACEHOLDER_DESC,
+      desc: projDesc(
+        "I rebuilt Killa Design's Museum of the Future in Dubai from scratch in Grasshopper, reverse-engineering its panelization logic and structural framing.",
+        '두바이에 있는 킬라 디자인의 미래 박물관을 그래스호퍼로 처음부터 다시 만들어보면서, 패널 분할 논리와 구조 프레임을 직접 역설계했습니다.',
+        [
+          { cat: 'Main Modeling', tools: 'Rhino' },
+          { cat: 'Parametric Design', tools: 'Grasshopper' },
+          { cat: 'Video Editing', tools: 'Premiere Pro' },
+        ]
+      ),
     },
     {
       title: 'Grasshopper Forming Practice 2',
@@ -188,7 +269,15 @@
       thumb: 'assets/images/arch_gh2_thumb.jpg',
       intro: { en: 'Decoding the design logic of Oceanogràfic Valencia', ko: '발렌시아 오세아노그라픽의 디자인 논리는 무엇일까?' },
       pages: ['https://youtu.be/S5QQ1s_kPmA'],
-      desc: PLACEHOLDER_DESC,
+      desc: projDesc(
+        "I studied Félix Candela's Oceanogràfic in Valencia by rebuilding its shell surface and structural framing parametrically in Grasshopper.",
+        '발렌시아에 있는 펠릭스 칸델라의 오세아노그라픽을 그래스호퍼로 파라메트릭하게 재구축하면서, 쉘 곡면과 구조 프레임의 논리를 연구했습니다.',
+        [
+          { cat: 'Main Modeling', tools: 'Rhino' },
+          { cat: 'Parametric Design', tools: 'Grasshopper' },
+          { cat: 'Video Editing', tools: 'Premiere Pro' },
+        ]
+      ),
     },
     {
       title: 'Grasshopper Kangaroo Structure Analysis',
@@ -196,7 +285,16 @@
       thumb: 'assets/images/arch_kangaroo_thumb.jpg',
       intro: { en: 'What structural forces support the main open hall of the National Museum of Korea?', ko: '국립중앙박물관의 트러스 구조는 어떠한 방향과 힘을 가지는가?' },
       pages: pageRange('arch_kangaroo', 13),
-      desc: PLACEHOLDER_DESC,
+      desc: projDesc(
+        "I ran a structural analysis on the National Museum of Korea's steel truss hall with Kangaroo and Karamba3D, digging into the forces and geometry behind its long-span roof.",
+        '국립중앙박물관의 강구조 트러스 홀을 Kangaroo와 Karamba3D로 분석하면서, 긴 스팬의 지붕을 지탱하는 힘과 형태를 살펴봤습니다.',
+        [
+          { cat: 'Main Modeling', tools: 'Rhino' },
+          { cat: 'Parametric Design', tools: 'Grasshopper' },
+          { cat: 'Simulation', tools: 'Kangaroo (in Grasshopper)' },
+          { cat: 'Structural Analysis', tools: 'Karamba3D (in Grasshopper)' },
+        ]
+      ),
     },
   ];
 
@@ -450,6 +548,15 @@
         '<b>Situation</b> · '+proj.situation+'<br>'+
         '<b>Focus</b> · '+proj.focus+'<br>'+
         '<b>Approach</b> · '+proj.approach;
+    } else if(proj.desc && typeof proj.desc === 'object'){
+      const rows = proj.desc.programs.map(p=>
+        '<div class="vd-row"><span class="vd-cat">'+p.cat+'</span> · <span class="vd-tools">'+p.tools+'</span></div>'
+      ).join('');
+      viewerDesc.innerHTML =
+        '<div class="vd-en">'+proj.desc.en+'</div>'+
+        '<div class="vd-ko serif">'+proj.desc.ko+'</div>'+
+        '<div class="vd-programs">'+rows+'</div>'+
+        '<div class="vd-page">'+(state.pageIndex+1)+' / '+proj.pages.length+'</div>';
     } else {
       viewerDesc.textContent = proj.desc + '  ('+(state.pageIndex+1)+'/'+proj.pages.length+')';
     }

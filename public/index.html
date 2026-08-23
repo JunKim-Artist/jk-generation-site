@@ -287,11 +287,18 @@ body.show-chrome #chrome{ opacity:1; }
 .arrow-btn:hover{ border-color:var(--ink); color:var(--ink); }
 .arrow-btn svg{ width:20px; height:20px; }
 .viewer-bottomleft{
-  position:absolute; left:32px; bottom:26px; max-width:440px;
-  background:rgba(10,10,10,.72); padding:12px 16px; border-radius:8px;
+  position:absolute; left:32px; bottom:26px; max-width:460px; max-height:min(58vh,420px);
+  background:rgba(10,10,10,.72); padding:12px 16px; border-radius:8px; overflow-y:auto;
 }
 .viewer-bottomleft p{ margin:0; font-size:12.5px; line-height:1.8; color:var(--ink-dim); font-family:'Noto Serif KR',serif; }
 .viewer-bottomleft p b{ color:var(--ink); font-weight:600; }
+.viewer-bottomleft #viewer-desc .vd-en{ font-size:12.5px; line-height:1.7; color:var(--ink); font-weight:500; }
+.viewer-bottomleft #viewer-desc .vd-ko{ margin-top:5px; font-size:11.5px; line-height:1.7; color:var(--ink-dim); font-weight:300; font-family:'Noto Serif KR',serif; }
+.viewer-bottomleft #viewer-desc .vd-programs{ margin-top:10px; padding-top:9px; border-top:1px solid var(--line); }
+.viewer-bottomleft #viewer-desc .vd-row{ font-size:11.5px; line-height:1.9; }
+.viewer-bottomleft #viewer-desc .vd-cat{ font-style:italic; font-weight:300; color:var(--ink-faint); }
+.viewer-bottomleft #viewer-desc .vd-tools{ font-weight:700; color:var(--ink); }
+.viewer-bottomleft #viewer-desc .vd-page{ margin-top:9px; font-size:10px; color:var(--ink-faint); font-family:'Noto Serif KR',serif; }
 .page-dots{ position:absolute; bottom:30px; left:50%; transform:translateX(-50%); display:flex; gap:7px; }
 .page-dots span{ width:5px; height:5px; border-radius:50%; background:var(--ink-faint); }
 .page-dots span.on{ background:var(--ink); }
@@ -440,7 +447,7 @@ body.show-chrome #chrome{ opacity:1; }
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg>
     </button>
     <div class="page-dots" id="page-dots"></div>
-    <div class="viewer-bottomleft"><p id="viewer-desc" class="serif"></p></div>
+    <div class="viewer-bottomleft"><div id="viewer-desc"></div></div>
   </section>
 
   <section id="screen-musicplayer" class="screen">
