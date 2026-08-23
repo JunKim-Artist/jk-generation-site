@@ -106,6 +106,26 @@ async function handleReply(request, env) {
   return json({ ok: true, entry });
 }
 
+async function handleDeleteMessage(request, env) {
+  const password = request.headers.get("X-Admin-Password") || "";
+  if (!checkPassword(env, password)) {
+    return json({ error: "unauthorized" }, 401);
+  }
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: "invalid_json" }, 400);
+  }
+  const id = (body && body.id || "").toString();
+  if (!id) return json({ error: "missing_id" }, 400);
+
+  const thread = await loadThread(env);
+  const next = thread.filter((m) => m.id !== id);
+  await saveThread(env, next);
+  return json({ ok: true });
+}
+
 async function handleAdminAuth(request, env) {
   let body;
   try {
@@ -130,6 +150,10 @@ export default {
 
     if (url.pathname === "/api/reply" && request.method === "POST") {
       return handleReply(request, env);
+    }
+
+    if (url.pathname === "/api/delete-message" && request.method === "POST") {
+      return handleDeleteMessage(request, env);
     }
 
     if (url.pathname === "/api/admin-auth" && request.method === "POST") {
