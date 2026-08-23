@@ -308,9 +308,9 @@
       const card = document.createElement('button');
       const thumb = p.pages && p.pages[0];
       card.className = 'proj-card' + (thumb ? ' has-thumb' : '');
-      if(thumb) card.style.backgroundImage = "url('"+thumb+"')";
+      const thumbHtml = thumb ? '<span class="pc-thumb" style="background-image:url(\''+thumb+'\')"></span>' : '';
       const fieldHtml = p.field ? '<span class="pc-field serif">'+p.field+'</span>' : '';
-      card.innerHTML = '<span class="pc-num serif">'+String(i+1).padStart(2,'0')+'</span><span class="pc-title">'+p.title+'</span>'+fieldHtml;
+      card.innerHTML = thumbHtml+'<span class="pc-num serif">'+String(i+1).padStart(2,'0')+'</span><span class="pc-title">'+p.title+'</span>'+fieldHtml;
       card.addEventListener('click', (e)=> flyToViewer(e.currentTarget, cat, i));
       galleryGrid.appendChild(card);
     });

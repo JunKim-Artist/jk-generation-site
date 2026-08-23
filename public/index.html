@@ -198,26 +198,31 @@ body.show-chrome #chrome{ opacity:1; }
   transition:transform .3s ease, border-color .3s ease;
 }
 .proj-card:hover{ transform:translateY(-3px); border-color:var(--ink-faint); }
-.proj-card.has-thumb{
-  background-size:cover; background-position:center; justify-content:flex-end;
+.proj-card.has-thumb{ justify-content:flex-end; }
+.proj-card .pc-thumb{
+  position:absolute; inset:0; z-index:0;
+  background-size:cover; background-position:center;
+  filter:grayscale(1) contrast(.92) brightness(.82);
+  transition:filter .55s ease, transform .6s ease;
 }
+.proj-card:hover .pc-thumb{ filter:grayscale(0) contrast(1) brightness(1); transform:scale(1.035); }
 .proj-card.has-thumb::before{
-  content:''; position:absolute; inset:0;
+  content:''; position:absolute; inset:0; z-index:1;
   background:linear-gradient(180deg, rgba(10,10,10,0) 45%, rgba(10,10,10,.88) 100%);
   transition:background .3s ease;
 }
 .proj-card.has-thumb:hover::before{ background:linear-gradient(180deg, rgba(10,10,10,.15) 0%, rgba(10,10,10,.92) 100%); }
-.proj-card .pc-num{ font-size:11px; color:var(--ink-faint); position:absolute; top:10px; left:12px; font-family:'Noto Serif KR',serif; z-index:1; }
+.proj-card .pc-num{ font-size:11px; color:var(--ink-faint); position:absolute; top:10px; left:12px; font-family:'Noto Serif KR',serif; z-index:2; }
 .proj-card.has-thumb .pc-num{ color:rgba(242,242,240,.75); }
 .proj-card .pc-title{
   font-size:13px; font-weight:600; color:var(--ink-dim); transition:color .3s ease;
-  position:relative; z-index:1; padding:0 12px; text-align:left; line-height:1.35;
+  position:relative; z-index:2; padding:0 12px; text-align:left; line-height:1.35;
 }
 .proj-card.has-thumb .pc-title{ color:var(--ink); }
 .proj-card:hover .pc-title{ color:var(--ink); }
 .proj-card .pc-field{
   font-size:11px; font-weight:400; font-style:italic; color:var(--ink-faint); transition:color .3s ease;
-  position:relative; z-index:1; padding:2px 12px 10px; text-align:left; line-height:1.3; letter-spacing:.01em;
+  position:relative; z-index:2; padding:2px 12px 10px; text-align:left; line-height:1.3; letter-spacing:.01em;
 }
 .proj-card.has-thumb .pc-field{ color:rgba(242,242,240,.68); }
 .proj-card:hover .pc-field{ color:var(--ink-dim); }
