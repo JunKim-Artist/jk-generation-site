@@ -257,7 +257,7 @@ body.show-chrome #chrome{ opacity:1; }
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 }
 .viewer-canvas{
-  position:absolute; inset:80px 100px 96px 32px; background:var(--panel);
+  position:absolute; inset:80px 100px 96px 100px; background:var(--panel);
   border:1px solid var(--line); border-radius:6px;
   display:flex; align-items:center; justify-content:center;
 }
@@ -296,6 +296,7 @@ body.show-chrome #chrome{ opacity:1; }
   background:rgba(10,10,10,.72); padding:12px 16px; border-radius:8px; overflow-y:auto;
   transition:max-height .3s ease;
 }
+#screen-viewer .viewer-bottomleft{ left:100px; }
 .viewer-bottomleft.collapsed{ max-height:38px; overflow:hidden; }
 .vb-head{
   display:flex; align-items:center; justify-content:space-between; gap:16px;
