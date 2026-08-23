@@ -111,65 +111,91 @@
 
   const PLACEHOLDER_DESC = '프로젝트 설명이 곧 추가됩니다.';
 
+  function pageRange(prefix, count){
+    const arr = [];
+    for(let i=1;i<=count;i++) arr.push('assets/images/'+prefix+'_p'+String(i).padStart(2,'0')+'.jpg');
+    return arr;
+  }
+
   const ARCHITECTURE_PROJECTS = [
     {
       title: 'THE NEXT EARTH',
       field: 'Space Architecture | The Moon',
-      pages: ['assets/images/arch_nextearth_thumb.jpg'],
+      thumb: 'assets/images/arch_nextearth_thumb.jpg',
+      intro: { en: 'How can we inhabit the Moon?', ko: '달에서의 건축, 그 육하원칙은 무엇인가?' },
+      pages: ['https://youtu.be/3YwSd8TGetM'],
       desc: PLACEHOLDER_DESC,
     },
     {
       title: 'UN-COVERING',
       field: 'Market Renovation | Tongin Market, Seoul, Korea',
-      pages: ['assets/images/arch_uncovering_thumb.jpg'],
+      thumb: 'assets/images/arch_uncovering_thumb.jpg',
+      intro: { en: 'What does Tongin Market truly need?', ko: '통인시장에 진정 필요한 것은 무엇일까?' },
+      pages: ['assets/images/arch_uncovering_p1.jpg'],
       desc: PLACEHOLDER_DESC,
     },
     {
       title: 'RE:FLOW',
       field: 'Urban Design | Paldal-gu, Suwon, Korea',
-      pages: ['assets/images/arch_reflow_thumb.jpg'],
+      thumb: 'assets/images/arch_reflow_thumb.jpg',
+      intro: { en: 'How do we reconnect the forgotten footsteps of Suwon?', ko: '수원의 잊힌 발걸음을 어떻게 이을 것인가?' },
+      pages: ['assets/images/arch_reflow_p1.jpg'],
       desc: PLACEHOLDER_DESC,
     },
     {
       title: 'THE BISTRO',
       field: 'Cultural Complex | Seoripul, Seoul, Korea',
-      pages: ['assets/images/arch_bistro_thumb.jpg'],
+      thumb: 'assets/images/arch_bistro_thumb.jpg',
+      intro: { en: 'What are the fundamental roots of Seoripul?', ko: '서울 서리풀의 뿌리는 무엇일까?' },
+      pages: ['assets/images/arch_bistro_p1.jpg'],
       desc: PLACEHOLDER_DESC,
     },
     {
       title: 'BLOOMING HEARTS IN EMPTINESS',
       field: 'Park Pavilion | Nagasaki, Japan',
-      pages: ['assets/images/arch_blooming_thumb.jpg'],
+      thumb: 'assets/images/arch_blooming_thumb.jpg',
+      intro: { en: 'How can we memorialize the tragedy of Nagasaki?', ko: '나가사키의 아픔을 어떻게 기억할 것인가?' },
+      pages: ['assets/images/arch_blooming_p1.jpg'],
       desc: PLACEHOLDER_DESC,
     },
     {
       title: 'Transforming Experiment on Mars',
       field: 'Space Architecture | Mars',
-      pages: ['assets/images/arch_mars_thumb.jpg'],
+      thumb: 'assets/images/arch_mars_thumb.jpg',
+      intro: { en: 'What if architecture could transform?', ko: "영화 '트랜스포머'를 본 후, 건축의 변화를 상상하다." },
+      pages: ['assets/video/arch_mars_p1.mp4'],
       desc: PLACEHOLDER_DESC,
     },
     {
       title: 'HQ Skärholmen BIM Modeling',
       field: 'BIM Modeling | Stockholm, Sweden',
-      pages: ['assets/images/arch_skarholmen_thumb.jpg'],
+      thumb: 'assets/images/arch_skarholmen_thumb.jpg',
+      intro: { en: 'Exploring modeling possibilities in Revit', ko: '레빗(Revit)을 활용한 모델링의 가능성은?' },
+      pages: pageRange('arch_skarholmen', 11),
       desc: PLACEHOLDER_DESC,
     },
     {
       title: 'Grasshopper Forming Practice 1',
       field: 'Parametric Modeling | Dubai, UAE',
-      pages: ['assets/images/arch_gh1_thumb.jpg'],
+      thumb: 'assets/images/arch_gh1_thumb.jpg',
+      intro: { en: 'Decoding the design logic of the Museum of the Future', ko: '두바이 미래 박물관의 디자인 논리는 무엇일까?' },
+      pages: ['https://youtu.be/iuEYg4p_2B4'],
       desc: PLACEHOLDER_DESC,
     },
     {
       title: 'Grasshopper Forming Practice 2',
       field: 'Parametric Modeling | Valencia, Spain',
-      pages: ['assets/images/arch_gh2_thumb.jpg'],
+      thumb: 'assets/images/arch_gh2_thumb.jpg',
+      intro: { en: 'Decoding the design logic of Oceanogràfic Valencia', ko: '발렌시아 오세아노그라픽의 디자인 논리는 무엇일까?' },
+      pages: ['https://youtu.be/S5QQ1s_kPmA'],
       desc: PLACEHOLDER_DESC,
     },
     {
       title: 'Grasshopper Kangaroo Structure Analysis',
       field: 'Structural Analysis & Simulation | National Museum of Korea, Seoul, Korea',
-      pages: ['assets/images/arch_kangaroo_thumb.jpg'],
+      thumb: 'assets/images/arch_kangaroo_thumb.jpg',
+      intro: { en: 'What structural forces support the main open hall of the National Museum of Korea?', ko: '국립중앙박물관의 트러스 구조는 어떠한 방향과 힘을 가지는가?' },
+      pages: pageRange('arch_kangaroo', 13),
       desc: PLACEHOLDER_DESC,
     },
   ];
@@ -306,7 +332,7 @@
     galleryGrid.innerHTML = '';
     DATA[cat].forEach((p, i)=>{
       const card = document.createElement('button');
-      const thumb = p.pages && p.pages[0];
+      const thumb = p.thumb || (p.pages && p.pages[0]);
       card.className = 'proj-card' + (thumb ? ' has-thumb' : '');
       const thumbHtml = thumb ? '<span class="pc-thumb" style="background-image:url(\''+thumb+'\')"></span>' : '';
       const fieldHtml = p.field ? '<span class="pc-field serif">'+p.field+'</span>' : '';
@@ -367,7 +393,16 @@
   const viewerTitle = document.getElementById('viewer-title');
   const viewerDesc = document.getElementById('viewer-desc');
   const viewerCanvas = document.getElementById('viewer-canvas');
+  const viewerIntro = document.getElementById('viewer-intro');
+  const viewerIntroEn = viewerIntro.querySelector('.vi-en');
+  const viewerIntroKo = viewerIntro.querySelector('.vi-ko');
   const pageDots = document.getElementById('page-dots');
+  let introTimer = null;
+
+  function youtubeId(url){
+    const m = /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]{11})/.exec(url || '');
+    return m ? m[1] : null;
+  }
 
   function openViewer(cat, index, page){
     state.category = cat;
@@ -381,12 +416,33 @@
     viewerTitle.textContent = proj.title;
 
     const src = proj.pages[state.pageIndex];
-    if(src && src.endsWith('.mp4')){
-      viewerCanvas.innerHTML = '<video src="'+src+'" controls playsinline style="max-width:100%;max-height:100%;"></video>';
+    const yt = youtubeId(src);
+    if(yt){
+      viewerCanvas.innerHTML = '<iframe class="media-fadein" src="https://www.youtube.com/embed/'+yt+'?autoplay=1&mute=1&rel=0&playsinline=1" title="'+proj.title+'" style="width:100%;height:100%;border:0;" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+      setTimeout(()=>{
+        const el = viewerCanvas.querySelector('.media-fadein'); if(el) el.classList.add('in');
+      }, 20);
+    } else if(src && src.endsWith('.mp4')){
+      viewerCanvas.innerHTML = '<video class="media-fadein" src="'+src+'" autoplay muted playsinline controls style="max-width:100%;max-height:100%;"></video>';
+      setTimeout(()=>{
+        const el = viewerCanvas.querySelector('.media-fadein'); if(el) el.classList.add('in');
+      }, 20);
     } else if(src){
       viewerCanvas.innerHTML = '<img src="'+src+'" alt="'+proj.title+'" style="max-width:100%;max-height:100%;object-fit:contain;">';
     } else {
       viewerCanvas.innerHTML = '<span class="placeholder-tag serif">slide '+(state.pageIndex+1)+' / '+proj.pages.length+' — awaiting content</span>';
+    }
+
+    clearTimeout(introTimer);
+    if(state.pageIndex === 0 && proj.intro){
+      viewerIntroEn.textContent = proj.intro.en;
+      viewerIntroKo.textContent = proj.intro.ko;
+      viewerIntro.classList.remove('settled');
+      viewerIntro.classList.add('show');
+      introTimer = setTimeout(()=> viewerIntro.classList.add('settled'), 1700);
+    } else {
+      viewerIntro.classList.remove('show');
+      viewerIntro.classList.remove('settled');
     }
 
     if(proj.situation){

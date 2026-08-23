@@ -258,6 +258,26 @@ body.show-chrome #chrome{ opacity:1; }
   display:flex; align-items:center; justify-content:center;
 }
 .viewer-canvas .placeholder-tag{ font-size:12px; color:var(--ink-faint); font-family:'Noto Serif KR',serif; }
+.media-fadein{ filter:brightness(.1); transition:filter 1.9s ease; }
+.media-fadein.in{ filter:brightness(1); }
+.viewer-intro{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  z-index:6; text-align:center; width:min(84vw,880px); pointer-events:none;
+  opacity:0; visibility:hidden;
+  transition:top 1.05s cubic-bezier(.4,0,.2,1), transform 1.05s cubic-bezier(.4,0,.2,1), opacity .5s ease;
+}
+.viewer-intro.show{ opacity:1; visibility:visible; }
+.viewer-intro .vi-en{
+  font-size:clamp(24px,4.2vw,50px); line-height:1.28; color:var(--ink);
+  transition:font-size 1.05s cubic-bezier(.4,0,.2,1);
+}
+.viewer-intro .vi-ko{
+  margin-top:14px; font-size:clamp(13px,1.6vw,19px); line-height:1.6; color:var(--ink-dim);
+  transition:font-size 1.05s cubic-bezier(.4,0,.2,1), margin-top 1.05s cubic-bezier(.4,0,.2,1);
+}
+.viewer-intro.settled{ top:46px; transform:translate(-50%,0); }
+.viewer-intro.settled .vi-en{ font-size:13px; }
+.viewer-intro.settled .vi-ko{ font-size:10px; margin-top:3px; }
 .arrow-btn{
   position:absolute; right:38px; top:50%; transform:translateY(-50%);
   width:56px; height:56px; border-radius:50%; border:1px solid var(--line);
@@ -351,6 +371,8 @@ body.show-chrome #chrome{ opacity:1; }
 
   .viewer-topcenter{ font-size:14px; max-width:64vw; top:16px; }
   .viewer-canvas{ inset:64px 16px 150px 16px; }
+  .viewer-intro{ width:88vw; }
+  .viewer-intro.settled{ top:38px; }
   .arrow-btn{ right:16px; width:46px; height:46px; }
   .arrow-btn svg{ width:17px; height:17px; }
   .viewer-bottomleft{ left:16px; right:16px; bottom:106px; max-width:none; }
@@ -410,6 +432,10 @@ body.show-chrome #chrome{ opacity:1; }
   <section id="screen-viewer" class="screen">
     <div class="viewer-topcenter display" id="viewer-title"></div>
     <div class="viewer-canvas" id="viewer-canvas"><span class="placeholder-tag serif">slide placeholder — awaiting content</span></div>
+    <div class="viewer-intro" id="viewer-intro">
+      <div class="vi-en display"></div>
+      <div class="vi-ko serif"></div>
+    </div>
     <button class="arrow-btn" id="viewer-next" aria-label="next">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg>
     </button>
