@@ -495,6 +495,9 @@
   const viewerIntroEn = viewerIntro.querySelector('.vi-en');
   const viewerIntroKo = viewerIntro.querySelector('.vi-ko');
   const pageDots = document.getElementById('page-dots');
+  const viewerBottomleft = document.getElementById('viewer-bottomleft');
+  const vbHead = document.getElementById('vb-head');
+  vbHead.addEventListener('click', ()=> viewerBottomleft.classList.toggle('collapsed'));
   let introTimer = null;
 
   function youtubeId(url){
