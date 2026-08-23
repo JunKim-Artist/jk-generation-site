@@ -521,7 +521,7 @@
     const revealDelay = withIntro ? 2830 : 20;
 
     if(yt){
-      viewerCanvas.innerHTML = '<iframe class="media-fadein" src="https://www.youtube.com/embed/'+yt+'?autoplay=1&mute=1&rel=0&playsinline=1" title="'+proj.title+'" style="width:100%;height:100%;border:0;" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+      viewerCanvas.innerHTML = '<iframe class="media-fadein" src="https://www.youtube.com/embed/'+yt+'?autoplay=1&mute=1&rel=0&playsinline=1&hl=en&cc_lang_pref=en" title="'+proj.title+'" style="width:100%;height:100%;border:0;" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
     } else if(src && src.endsWith('.mp4')){
       viewerCanvas.innerHTML = '<video class="media-fadein" src="'+src+'" autoplay muted playsinline controls style="max-width:100%;max-height:100%;"></video>';
     } else if(src){
