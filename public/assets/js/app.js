@@ -515,24 +515,26 @@
 
     const src = proj.pages[state.pageIndex];
     const yt = youtubeId(src);
+    const withIntro = state.pageIndex === 0 && !!proj.intro;
+    // intro tagline: 1700ms hold + 1050ms settle transition, plus a small buffer —
+    // the first page's media only reveals once the tagline has fully finished moving.
+    const revealDelay = withIntro ? 2830 : 20;
+
     if(yt){
       viewerCanvas.innerHTML = '<iframe class="media-fadein" src="https://www.youtube.com/embed/'+yt+'?autoplay=1&mute=1&rel=0&playsinline=1" title="'+proj.title+'" style="width:100%;height:100%;border:0;" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
-      setTimeout(()=>{
-        const el = viewerCanvas.querySelector('.media-fadein'); if(el) el.classList.add('in');
-      }, 20);
     } else if(src && src.endsWith('.mp4')){
       viewerCanvas.innerHTML = '<video class="media-fadein" src="'+src+'" autoplay muted playsinline controls style="max-width:100%;max-height:100%;"></video>';
-      setTimeout(()=>{
-        const el = viewerCanvas.querySelector('.media-fadein'); if(el) el.classList.add('in');
-      }, 20);
     } else if(src){
-      viewerCanvas.innerHTML = '<img src="'+src+'" alt="'+proj.title+'" style="max-width:100%;max-height:100%;object-fit:contain;">';
+      viewerCanvas.innerHTML = '<img class="media-fadein" src="'+src+'" alt="'+proj.title+'" style="max-width:100%;max-height:100%;object-fit:contain;">';
     } else {
       viewerCanvas.innerHTML = '<span class="placeholder-tag serif">slide '+(state.pageIndex+1)+' / '+proj.pages.length+' — awaiting content</span>';
     }
+    setTimeout(()=>{
+      const el = viewerCanvas.querySelector('.media-fadein'); if(el) el.classList.add('in');
+    }, revealDelay);
 
     clearTimeout(introTimer);
-    if(state.pageIndex === 0 && proj.intro){
+    if(withIntro){
       viewerIntroEn.textContent = proj.intro.en;
       viewerIntroKo.textContent = proj.intro.ko;
       viewerIntro.classList.remove('settled');
@@ -562,10 +564,19 @@
     }
     pageDots.innerHTML = '';
     proj.pages.forEach((_, i)=>{
+      const btn = document.createElement('button');
+      btn.setAttribute('aria-label', 'go to page '+(i+1));
       const d = document.createElement('span');
       if(i===state.pageIndex) d.className='on';
-      pageDots.appendChild(d);
+      btn.appendChild(d);
+      btn.addEventListener('click', ()=> goToPage(i));
+      pageDots.appendChild(btn);
     });
+  }
+  function goToPage(i){
+    if(i === state.pageIndex) return;
+    state.pageIndex = i;
+    renderViewer();
   }
   function viewerNext(){
     const proj = DATA[state.category][state.projectIndex];
@@ -583,6 +594,7 @@
     }
   }
   document.getElementById('viewer-next').addEventListener('click', viewerNext);
+  document.getElementById('viewer-prev').addEventListener('click', viewerPrev);
 
   function handleViewerKeys(e){
     if(state.screen !== 'viewer') return;
