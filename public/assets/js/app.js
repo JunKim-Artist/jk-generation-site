@@ -211,7 +211,7 @@
       field: 'Software Tutoring | Architecture Design',
       thumb: 'assets/images/freelance01_thumb.jpg',
       intro: { en: 'Mastering the Essential Workflow for Architectural Design', ko: '건축 디자인의 뼈대를 세우는 필수 프로그램 워크플로우' },
-      pages: [null],
+      pages: pageRange('freelance01', 1),
       desc: PLACEHOLDER_DESC,
     },
     {
@@ -219,7 +219,7 @@
       field: 'Software Tutoring | Interior Design',
       thumb: 'assets/images/freelance02_thumb.jpg',
       intro: { en: 'From 2D Drafts to 3D Visualization in Interior Design', ko: '도면에서 3D 공간으로, 인테리어 디자인의 시각화' },
-      pages: [null],
+      pages: pageRange('freelance02', 1),
       desc: PLACEHOLDER_DESC,
     },
     {
@@ -235,7 +235,7 @@
       field: 'Software Tutoring | Architecture Design',
       thumb: 'assets/images/freelance04_thumb.jpg',
       intro: { en: 'Practical 3D Modeling and Data Management for Architecture Students', ko: '건축학도를 위한 실전 3D 모델링과 데이터 관리' },
-      pages: [null],
+      pages: pageRange('freelance04', 1),
       desc: PLACEHOLDER_DESC,
     },
     {
@@ -243,7 +243,7 @@
       field: 'Rendering Tutoring | Architectural Visualization',
       thumb: 'assets/images/freelance05_thumb.jpg',
       intro: { en: 'Expressing Realistic Light and Texture in Architectural Spaces', ko: '건축 공간의 빛과 질감을 사실적으로 표현하는 방법' },
-      pages: [null],
+      pages: pageRange('freelance05', 2),
       desc: PLACEHOLDER_DESC,
     },
     {
@@ -251,7 +251,7 @@
       field: 'Modeling & Tutoring | Residential Apartment',
       thumb: 'assets/images/freelance06_thumb.jpg',
       intro: { en: 'Modeling Residential Spaces Tailored to Lifestyles', ko: '사용자의 라이프스타일을 담은 주거 공간 모델링' },
-      pages: [null],
+      pages: pageRange('freelance06', 1),
       desc: PLACEHOLDER_DESC,
     },
     {
@@ -259,7 +259,7 @@
       field: 'Software Tutoring | Interior Design',
       thumb: 'assets/images/freelance07_thumb.jpg',
       intro: { en: 'Building Interiors through Accurate Drafting and Modeling', ko: '정확한 도면 설계와 모델링으로 구축하는 인테리어' },
-      pages: [null],
+      pages: pageRange('freelance07', 1),
       desc: PLACEHOLDER_DESC,
     },
     {
@@ -267,7 +267,7 @@
       field: 'Modeling & Tutoring | Residential Apartment',
       thumb: 'assets/images/freelance08_thumb.jpg',
       intro: { en: 'Proposing Apartment Interiors with Efficient Circulation and Aesthetics', ko: '효율적인 동선과 심미성을 고려한 아파트 인테리어 제안' },
-      pages: [null],
+      pages: pageRange('freelance08', 2),
       desc: PLACEHOLDER_DESC,
     },
     {
@@ -275,7 +275,7 @@
       field: 'Software Tutoring | Professional Workflow',
       thumb: 'assets/images/freelance09_thumb.jpg',
       intro: { en: 'Practical SketchUp Optimization Know-How for Professionals', ko: '실무에 즉시 적용 가능한 스케치업 최적화 노하우' },
-      pages: [null],
+      pages: pageRange('freelance09', 1),
       desc: PLACEHOLDER_DESC,
     },
     {
@@ -283,7 +283,7 @@
       field: 'Design Tutoring | Industrial Design',
       thumb: 'assets/images/freelance10_thumb.jpg',
       intro: { en: 'Translating Ideas into Products: Industrial Design Modeling', ko: '아이디어를 제품으로 구현하는 산업디자인 모델링' },
-      pages: [null],
+      pages: pageRange('freelance10', 3),
       desc: PLACEHOLDER_DESC,
     },
     {
@@ -291,7 +291,7 @@
       field: 'Modeling & Tutoring | Medical Facility',
       thumb: 'assets/images/freelance11_thumb.jpg',
       intro: { en: 'Medical Space Interiors Balancing Function and Patient Psychology', ko: '기능성과 환자의 심리를 고려한 의료 공간 인테리어' },
-      pages: [null],
+      pages: pageRange('freelance11', 5),
       desc: PLACEHOLDER_DESC,
     },
     {
@@ -299,7 +299,7 @@
       field: 'Software Tutoring | Interior Design',
       thumb: 'assets/images/freelance12_thumb.jpg',
       intro: { en: 'Highly Detailed 2D/3D Workflow for Interior Design', ko: '디테일이 살아있는 2D/3D 인테리어 워크플로우' },
-      pages: [null],
+      pages: pageRange('freelance12', 1),
       desc: PLACEHOLDER_DESC,
     },
     {
@@ -315,7 +315,7 @@
       field: 'Design Tutoring | Academic Portfolio',
       thumb: 'assets/images/freelance14_thumb.jpg',
       intro: { en: 'Exploring Logical and Experimental Designs of Overseas Architecture Schools', ko: '해외 건축대학의 논리적이고 실험적인 디자인 탐구' },
-      pages: [null],
+      pages: pageRange('freelance14', 3),
       desc: PLACEHOLDER_DESC,
     },
     {
@@ -323,7 +323,7 @@
       field: 'Freelance Design | Playground Facility',
       thumb: 'assets/images/freelance15_thumb.jpg',
       intro: { en: 'Mounting Design for Safe and Creative Play Spaces', ko: '안전하고 창의적인 놀이 공간을 위한 마운팅 설계' },
-      pages: [null],
+      pages: pageRange('freelance15', 4),
       desc: PLACEHOLDER_DESC,
     },
     {
@@ -331,7 +331,7 @@
       field: 'Survey & Modeling | Commercial Space',
       thumb: 'assets/images/freelance16_thumb.jpg',
       intro: { en: 'Commercial Space Modeling Based on Accurate Survey Data', ko: '정확한 실측 데이터를 바탕으로 한 상업 공간 모델링' },
-      pages: [null],
+      pages: pageRange('freelance16', 2),
       desc: PLACEHOLDER_DESC,
     },
   ];
