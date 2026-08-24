@@ -16,99 +16,6 @@
     return arr;
   }
 
-  function freelanceCase(title, situation, focus, approach, pageFiles){
-    return {
-      title: title,
-      situation: situation,
-      focus: focus,
-      approach: approach,
-      pages: pageFiles.map(f => 'assets/images/freelance/'+f),
-    };
-  }
-
-  const FREELANCE_CASES = [
-    freelanceCase('CAD Practical Tutoring A',
-      'Interior design major who wanted to sharpen her presentation skills.',
-      'I structured the plan around detail and visual communication.',
-      '7 sessions over 4 weeks — AutoCAD 2D, SketchUp, Enscape rendering, then an Illustrator panel layout — ending with finished practice drawings and a rendered panel.',
-      ['freelance01.jpg','freelance01_sub.jpg','freelance01_curr.jpg']),
-    freelanceCase('CAD Practical Tutoring B',
-      'An experienced construction professional who wanted to upgrade to more detailed digital representation.',
-      'I leaned into his existing site knowledge and focused on precision and detail.',
-      '7 sessions at his home — AutoCAD 2D → SketchUp → Enscape → AI post-processing → PowerPoint visualization — producing measured drawings and a rendered presentation deck.',
-      ['freelance02.jpg','freelance02_sub.jpg','freelance02_curr.jpg']),
-    freelanceCase('Interior SketchUp Tutoring',
-      'A working interior designer who needed SketchUp skills for her portfolio.',
-      'I kept the sessions hands-on and tied directly to real modeling tasks.',
-      'Practical SketchUp modeling sessions producing usable, studio-quality practice models.',
-      ['freelance03.jpg']),
-    freelanceCase('Architecture Studio Mentoring A',
-      'An architecture student who needed full support through a school design project.',
-      'I paired software training with actual design development, not just tool tutorials.',
-      '16 sessions over 8 weeks — AutoCAD → Rhino/Grasshopper → QGIS → Illustrator — from site analysis through to a final critique panel.',
-      ['freelance04.jpg','freelance04_sub.jpg','freelance04_curr.jpg']),
-    freelanceCase('Interior Firm Collaboration',
-      'A remodeling company that needed stronger modeling and drawing-review capability.',
-      'I focused on a repeatable modeling and review workflow their team could reuse.',
-      'SketchUp modeling sessions plus a construction drawing review process, producing confirmed before/after floor plans and 3D models.',
-      ['freelance05.jpg','freelance05_sub.jpg']),
-    freelanceCase('CAD/Rhino Tutoring A',
-      'Wanted to expand beyond 2D drafting into 3D tools.',
-      'I built a bridge from CAD fundamentals straight into rendering workflows.',
-      '6 weeks — CAD → Rhino/SketchUp → V-Ray/D5 rendering → Grasshopper/QGIS — ending in finished rendered output.',
-      ['freelance06.jpg','freelance06_sub.jpg','freelance06_curr.jpg']),
-    freelanceCase('CAD/SketchUp Tutoring C',
-      'Needed to go from basics to producing real working drawings.',
-      'I emphasized rebuilding real floor plans from scratch, not just following commands.',
-      'Standard curriculum — CAD fundamentals into a 3D wall model in SketchUp.',
-      ['freelance07.jpg','freelance07_curr.jpg']),
-    freelanceCase('Short-term SketchUp Tutoring (Online)',
-      'Wanted to focus narrowly on SketchUp in a short window.',
-      'I compressed the material into a tight, remote-friendly format.',
-      '3 sessions over Google Meet — install & interface, Boolean modeling, then applied practice.',
-      ['freelance08.jpg']),
-    freelanceCase('Architecture Studio Mentoring B',
-      'An architecture student who needed support developing a studio project alongside Grasshopper skills.',
-      'I let the software follow the design, not the other way around.',
-      'SketchUp/Rhino fundamentals extended into Grasshopper parametric work as the studio project developed.',
-      ['freelance09.jpg','freelance09_sub.jpg','freelance09_curr.jpg']),
-    freelanceCase('Advanced Interior Practice Course',
-      'Needed practice-ready skills including 3D printing and laser cutting.',
-      'I connected digital modeling directly to physical fabrication output.',
-      '6 sessions, 18 hours — Rhino/Grasshopper → 3D printing & laser cutting → V-Ray/Rumion/D5 — producing a rendered medical-interior space.',
-      ['freelance10.jpg','freelance10_sub.jpg','freelance10_curr.jpg']),
-    freelanceCase('CAD Practical Tutoring D',
-      'A real-estate professional who needed accurate as-built drawings.',
-      'I focused entirely on real-world measuring and drafting accuracy.',
-      '6 sessions measuring an actual listing and turning it into a finished CAD floor plan.',
-      ['freelance11.jpg','freelance11_sub.jpg','freelance11_curr.jpg']),
-    freelanceCase('CAD Fundamentals Tutoring',
-      'Complete beginner to AutoCAD.',
-      'I broke the software down command by command so nothing was assumed.',
-      'A slow, deliberate fundamentals course building up to independent floor plan drafting.',
-      ['freelance12.jpg','freelance12_sub.jpg']),
-    freelanceCase('International Student CAD/Rhino Tutoring',
-      'An interior design student in Canada who needed a fully remote program.',
-      'I built a complete pipeline she could run entirely from her laptop, start to finish.',
-      '24 hours over 8 weeks — CAD → Rhino/Grasshopper (SubD & parametric) → 3D printing → QGIS → V-Ray → InDesign, entirely over Google Meet — culminating in a Farnsworth House rendering exercise.',
-      ['freelance13.jpg','freelance13_sub.jpg','freelance13_curr.jpg']),
-    freelanceCase('Detached House Rendering (Freelance)',
-      'A client who needed visualization after the design was finalized.',
-      'I focused on giving the house real atmosphere, not just a flat exterior view.',
-      'Rhino modeling into D5/V-Ray rendering across multiple exterior and interior angles.',
-      ['freelance14.jpg','freelance14_sub.jpg']),
-    freelanceCase('Pavilion & Structure Rendering (Freelance)',
-      'A client who needed modeling and rendering for sculptural structures.',
-      'I focused on getting the form and material read clearly across several options.',
-      '3dm modeling into option studies and final renders.',
-      ['freelance15.jpg','freelance15_sub.jpg']),
-    freelanceCase('Hair Salon Interior Rendering (Freelance)',
-      'A salon owner who sent a single material reference photo and asked for a 3D interior concept.',
-      'I focused on translating one material reference into a full spatial concept.',
-      'Rhino modeling of the salon interior, developing the textured feature wall from the client\'s reference photo into a full render. Final export still in progress.',
-      ['freelance16_v2.jpg','freelance16_sub_v2.jpg']),
-  ];
-
   const PLACEHOLDER_DESC = '프로젝트 설명이 곧 추가됩니다.';
 
   function pageRange(prefix, count){
@@ -298,9 +205,140 @@
     },
   ];
 
+  const FREELANCE_PROJECTS = [
+    {
+      title: 'Architecture Software Tutoring A',
+      field: 'Software Tutoring | Architecture Design',
+      thumb: 'assets/images/freelance01_thumb.jpg',
+      intro: { en: 'Mastering the Essential Workflow for Architectural Design', ko: '건축 디자인의 뼈대를 세우는 필수 프로그램 워크플로우' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'CAD & SketchUp Tutoring A',
+      field: 'Software Tutoring | Interior Design',
+      thumb: 'assets/images/freelance02_thumb.jpg',
+      intro: { en: 'From 2D Drafts to 3D Visualization in Interior Design', ko: '도면에서 3D 공간으로, 인테리어 디자인의 시각화' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'CAD & SketchUp Tutoring B',
+      field: 'Software Tutoring | Interior Design',
+      thumb: 'assets/images/freelance03_thumb.jpg',
+      intro: { en: 'Completing Spatial Details with CAD & SketchUp Integration', ko: '캐드와 스케치업의 연동으로 완성하는 공간 디테일' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'Architecture Software Tutoring B',
+      field: 'Software Tutoring | Architecture Design',
+      thumb: 'assets/images/freelance04_thumb.jpg',
+      intro: { en: 'Practical 3D Modeling and Data Management for Architecture Students', ko: '건축학도를 위한 실전 3D 모델링과 데이터 관리' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'Architectural Rendering Tutoring A',
+      field: 'Rendering Tutoring | Architectural Visualization',
+      thumb: 'assets/images/freelance05_thumb.jpg',
+      intro: { en: 'Expressing Realistic Light and Texture in Architectural Spaces', ko: '건축 공간의 빛과 질감을 사실적으로 표현하는 방법' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'Interior Modeling Freelance & Tutoring A',
+      field: 'Modeling & Tutoring | Residential Apartment',
+      thumb: 'assets/images/freelance06_thumb.jpg',
+      intro: { en: 'Modeling Residential Spaces Tailored to Lifestyles', ko: '사용자의 라이프스타일을 담은 주거 공간 모델링' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'CAD & SketchUp Tutoring C',
+      field: 'Software Tutoring | Interior Design',
+      thumb: 'assets/images/freelance07_thumb.jpg',
+      intro: { en: 'Building Interiors through Accurate Drafting and Modeling', ko: '정확한 도면 설계와 모델링으로 구축하는 인테리어' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'Interior Modeling Freelance & Tutoring B',
+      field: 'Modeling & Tutoring | Residential Apartment',
+      thumb: 'assets/images/freelance08_thumb.jpg',
+      intro: { en: 'Proposing Apartment Interiors with Efficient Circulation and Aesthetics', ko: '효율적인 동선과 심미성을 고려한 아파트 인테리어 제안' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'Practical SketchUp Tutoring A',
+      field: 'Software Tutoring | Professional Workflow',
+      thumb: 'assets/images/freelance09_thumb.jpg',
+      intro: { en: 'Practical SketchUp Optimization Know-How for Professionals', ko: '실무에 즉시 적용 가능한 스케치업 최적화 노하우' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'Industrial Design Tutoring A',
+      field: 'Design Tutoring | Industrial Design',
+      thumb: 'assets/images/freelance10_thumb.jpg',
+      intro: { en: 'Translating Ideas into Products: Industrial Design Modeling', ko: '아이디어를 제품으로 구현하는 산업디자인 모델링' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'Clinic Interior Modeling Freelance & Tutoring',
+      field: 'Modeling & Tutoring | Medical Facility',
+      thumb: 'assets/images/freelance11_thumb.jpg',
+      intro: { en: 'Medical Space Interiors Balancing Function and Patient Psychology', ko: '기능성과 환자의 심리를 고려한 의료 공간 인테리어' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'CAD & SketchUp Tutoring D',
+      field: 'Software Tutoring | Interior Design',
+      thumb: 'assets/images/freelance12_thumb.jpg',
+      intro: { en: 'Highly Detailed 2D/3D Workflow for Interior Design', ko: '디테일이 살아있는 2D/3D 인테리어 워크플로우' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'CAD & SketchUp Tutoring E',
+      field: 'Software Tutoring | Interior Design',
+      thumb: 'assets/images/freelance13_thumb.jpg',
+      intro: { en: 'Building a Fast and Accurate Space Design Process', ko: '빠르고 정확한 공간 디자인 프로세스 구축하기' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'Overseas Architecture Design Tutoring A',
+      field: 'Design Tutoring | Academic Portfolio',
+      thumb: 'assets/images/freelance14_thumb.jpg',
+      intro: { en: 'Exploring Logical and Experimental Designs of Overseas Architecture Schools', ko: '해외 건축대학의 논리적이고 실험적인 디자인 탐구' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'Playground Mounting Modeling & Drawing',
+      field: 'Freelance Design | Playground Facility',
+      thumb: 'assets/images/freelance15_thumb.jpg',
+      intro: { en: 'Mounting Design for Safe and Creative Play Spaces', ko: '안전하고 창의적인 놀이 공간을 위한 마운팅 설계' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+    {
+      title: 'Hair Salon Interior Survey & Modeling',
+      field: 'Survey & Modeling | Commercial Space',
+      thumb: 'assets/images/freelance16_thumb.jpg',
+      intro: { en: 'Commercial Space Modeling Based on Accurate Survey Data', ko: '정확한 실측 데이터를 바탕으로 한 상업 공간 모델링' },
+      pages: [null],
+      desc: PLACEHOLDER_DESC,
+    },
+  ];
+
   const DATA = {
     architecture: ARCHITECTURE_PROJECTS,
-    freelance: FREELANCE_CASES,
+    freelance: FREELANCE_PROJECTS,
   };
 
   // ---------------- state ----------------
@@ -548,12 +586,7 @@
       viewerIntro.classList.remove('settled');
     }
 
-    if(proj.situation){
-      viewerDesc.innerHTML =
-        '<b>Situation</b> · '+proj.situation+'<br>'+
-        '<b>Focus</b> · '+proj.focus+'<br>'+
-        '<b>Approach</b> · '+proj.approach;
-    } else if(proj.desc && typeof proj.desc === 'object'){
+    if(proj.desc && typeof proj.desc === 'object'){
       const rows = proj.desc.programs.map(p=>
         '<div class="vd-row"><span class="vd-cat">'+p.cat+'</span> · <span class="vd-tools">'+p.tools+'</span></div>'
       ).join('');
