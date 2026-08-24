@@ -195,6 +195,13 @@ body.show-chrome #chrome{ opacity:1; }
   column-gap:18px; row-gap:40px;
   max-width:1400px; margin:0 auto;
 }
+.gallery-section-head{
+  grid-column:1 / -1; display:flex; align-items:baseline; flex-wrap:wrap; gap:12px;
+  margin-top:26px; padding-bottom:10px; border-bottom:1px solid var(--line);
+}
+.gallery-section-head:first-child{ margin-top:0; }
+.gallery-section-head .gs-label{ font-size:16px; font-weight:800; color:var(--ink); }
+.gallery-section-head .gs-note{ font-size:11.5px; font-style:italic; color:var(--ink-faint); }
 .grid[hidden], .list[hidden]{ display:none; }
 .proj-card{
   aspect-ratio:4/3; background:var(--panel); border:1px solid var(--line); border-radius:8px;

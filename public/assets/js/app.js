@@ -341,6 +341,37 @@
     freelance: FREELANCE_PROJECTS,
   };
 
+  // indices refer to positions in FREELANCE_PROJECTS above
+  const GALLERY_GROUPS = {
+    freelance: [
+      {
+        label: 'Software & CAD Tutoring',
+        note: '설계 프로그램의 기초를 다지는 튜터링',
+        indices: [0, 3, 1, 2, 6, 11, 12, 8],
+      },
+      {
+        label: 'Rendering Tutoring',
+        note: '사실적인 공간 표현을 위한 렌더링 트레이닝',
+        indices: [4],
+      },
+      {
+        label: 'Interior Modeling & Tutoring',
+        note: '실제 공간을 위한 모델링과 병행 튜터링',
+        indices: [5, 7, 10],
+      },
+      {
+        label: 'Design Tutoring',
+        note: '개념 설계와 포트폴리오 개발 멘토링',
+        indices: [9, 13],
+      },
+      {
+        label: 'Freelance Commissions',
+        note: '실측부터 도면까지, 독립 프리랜스 작업',
+        indices: [14, 15],
+      },
+    ],
+  };
+
   // ---------------- state ----------------
   const state = {
     screen: 'intro',
@@ -458,6 +489,17 @@
   const galleryTitle = document.getElementById('gallery-title');
   const gallerySub = document.getElementById('gallery-sub');
 
+  function renderProjCard(cat, p, displayNum, dataIndex){
+    const card = document.createElement('button');
+    const thumb = p.thumb || (p.pages && p.pages[0]);
+    card.className = 'proj-card' + (thumb ? ' has-thumb' : '');
+    const thumbHtml = thumb ? '<span class="pc-thumb" style="background-image:url(\''+thumb+'\')"></span>' : '';
+    const fieldHtml = p.field ? '<span class="pc-field serif">'+p.field+'</span>' : '';
+    card.innerHTML = thumbHtml+'<span class="pc-num serif">'+String(displayNum).padStart(2,'0')+'</span><span class="pc-title">'+p.title+'</span>'+fieldHtml;
+    card.addEventListener('click', (e)=> flyToViewer(e.currentTarget, cat, dataIndex));
+    galleryGrid.appendChild(card);
+  }
+
   function openGallery(cat){
     state.category = cat;
     galleryTitle.textContent = cat.charAt(0).toUpperCase()+cat.slice(1);
@@ -466,16 +508,23 @@
     galleryList.hidden = true;
     galleryList.innerHTML = '';
     galleryGrid.innerHTML = '';
-    DATA[cat].forEach((p, i)=>{
-      const card = document.createElement('button');
-      const thumb = p.thumb || (p.pages && p.pages[0]);
-      card.className = 'proj-card' + (thumb ? ' has-thumb' : '');
-      const thumbHtml = thumb ? '<span class="pc-thumb" style="background-image:url(\''+thumb+'\')"></span>' : '';
-      const fieldHtml = p.field ? '<span class="pc-field serif">'+p.field+'</span>' : '';
-      card.innerHTML = thumbHtml+'<span class="pc-num serif">'+String(i+1).padStart(2,'0')+'</span><span class="pc-title">'+p.title+'</span>'+fieldHtml;
-      card.addEventListener('click', (e)=> flyToViewer(e.currentTarget, cat, i));
-      galleryGrid.appendChild(card);
-    });
+
+    const groups = GALLERY_GROUPS[cat];
+    if(groups){
+      let n = 1;
+      groups.forEach(g=>{
+        const head = document.createElement('div');
+        head.className = 'gallery-section-head';
+        head.innerHTML = '<span class="gs-label display">'+g.label+'</span><span class="gs-note serif">'+g.note+'</span>';
+        galleryGrid.appendChild(head);
+        g.indices.forEach(idx=>{
+          renderProjCard(cat, DATA[cat][idx], n, idx);
+          n++;
+        });
+      });
+    } else {
+      DATA[cat].forEach((p, i)=> renderProjCard(cat, p, i+1, i));
+    }
     showScreen('gallery');
   }
 
