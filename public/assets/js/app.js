@@ -73,7 +73,7 @@
       field: 'Urban Design | Paldal-gu, Suwon, Korea',
       thumb: 'assets/images/arch_reflow_thumb.jpg',
       intro: { en: 'How do we reconnect the forgotten footsteps of Suwon?', ko: '수원의 잊힌 발걸음을 어떻게 이을 것인가?' },
-      pages: ['assets/images/arch_reflow_p1.jpg'],
+      pages: ['assets/images/arch_reflow_p1.jpg', 'assets/images/arch_reflow_p2.jpg', 'assets/images/arch_reflow_p3.jpg', 'assets/images/arch_reflow_p4.jpg'],
       desc: projDesc(
         "Based on interviews with the people who actually work and live in the alley, this urban regeneration project reopens Suwon's forgotten waterway and footpaths — reviving a once-important street to connect a fading traditional market with a rising modern one.",
         '그 골목에서 일하고 사는 사람들을 직접 인터뷰해서, 수원의 잊혀진 골목에 옛 물길과 발걸음을 다시 열어주는 도시재생 프로젝트입니다. 한때 중요했던 이 길을 되살려, 저물어가는 전통시장과 새로 피어나는 현대시장을 잇습니다.',
