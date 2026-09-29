@@ -34,7 +34,7 @@
       field: 'Space Architecture | The Moon',
       thumb: 'assets/images/arch_nextearth_thumb.jpg',
       intro: { en: 'How can we inhabit the Moon?', ko: '달에서의 건축, 그 육하원칙은 무엇인가?' },
-      pages: ['https://youtu.be/3YwSd8TGetM'],
+      pages: ['https://youtu.be/3YwSd8TGetM'].concat(pageRange('arch_nextearth', 21)),
       desc: projDesc(
         'Before anyone lives there, this project lays the uncrewed groundwork for a lunar settlement built through ISRU-based digital fabrication — I wrote the algorithm that drives it and built a robotic arm to prove the construction physically.',
         '유인 정착에 앞선 무인 개발 단계로, ISRU(현지자원활용) 기반 디지털 패브리케이션으로 달 정착지를 짓는 알고리즘을 직접 만들고, 로봇팔까지 제작·코딩해 실제 시공 과정을 증명했습니다.',
